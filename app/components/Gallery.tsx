@@ -9,10 +9,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 const images = [
-  '/images/photo1.jpg',
-  '/images/photo2.jpg',
-  '/images/photo3.jpg',
-  // 더 많은 이미지 추가 가능
+  'https://images.unsplash.com/photo-1583939003579-730e3918a45a',
+  'https://images.unsplash.com/photo-1583939411023-14783179e581',
+  'https://images.unsplash.com/photo-1606216794074-735e91aa2c92',
+  'https://images.unsplash.com/photo-1583939411023-14783179e581',
+  'https://images.unsplash.com/photo-1583939003579-730e3918a45a',
 ];
 
 export default function Gallery() {
@@ -49,6 +50,7 @@ export default function Gallery() {
           }}
           pagination={{
             clickable: true,
+            dynamicBullets: true,
           }}
           navigation={true}
           modules={[EffectCoverflow, Pagination, Navigation]}
