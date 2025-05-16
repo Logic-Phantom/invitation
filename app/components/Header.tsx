@@ -11,8 +11,7 @@ export default function Header() {
       className="min-h-screen flex flex-col items-center justify-center relative"
     >
       <div 
-        className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1607190074257-dd4b7af0309f')] bg-cover bg-center"
-        style={{ filter: 'brightness(0.7)' }}
+        className="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-800"
       />
       
       <motion.div 
@@ -35,7 +34,7 @@ export default function Header() {
             2024년 12월 31일 토요일 오후 2시
           </p>
           <p className="font-light">
-            보테가마지오 2층 어반홀
+            보테가마지오 웨딩홀
           </p>
         </div>
       </motion.div>

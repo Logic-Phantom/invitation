@@ -75,7 +75,7 @@ export default function Location() {
             오시는 길
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            보테가마지오 2층 어반홀
+            보테가마지오 웨딩홀
           </p>
           <div className="w-20 h-px bg-gray-300 mx-auto" />
         </div>
@@ -97,17 +97,36 @@ export default function Location() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="bg-white rounded-xl p-8 shadow-lg space-y-4 hover:shadow-xl transition-shadow"
             >
-              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
               <h3 className="text-xl font-medium text-gray-800">주소</h3>
-              <p className="text-gray-600 leading-relaxed">
-                서울특별시 중구 을지로 123<br />
-                보테가마지오 2층 어반홀
-              </p>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-gray-600">
+                    서울특별시 중구 을지로 12<br />
+                    보테가마지오 웨딩홀 2층
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    (구) 서울특별시 중구 을지로1가 192-11
+                  </p>
+                </div>
+                <div className="flex items-center justify-between space-x-2">
+                  <button
+                    onClick={() => {
+                      window.open('https://map.kakao.com/link/map/보테가마지오,37.5662952,126.9779451', '_blank');
+                    }}
+                    className="flex-1 py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm transition-colors"
+                  >
+                    <span>지도 앱으로 보기</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText('서울특별시 중구 을지로 12');
+                    }}
+                    className="flex-1 py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm transition-colors"
+                  >
+                    <span>주소 복사</span>
+                  </button>
+                </div>
+              </div>
             </motion.div>
             
             <motion.div
@@ -116,16 +135,18 @@ export default function Location() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-white rounded-xl p-8 shadow-lg space-y-4 hover:shadow-xl transition-shadow"
             >
-              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                </svg>
-              </div>
               <h3 className="text-xl font-medium text-gray-800">지하철</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li>2호선 을지로입구역 3번 출구</li>
-                <li className="text-sm text-gray-500">도보 5분 거리</li>
-              </ul>
+              <div className="space-y-4">
+                <div className="bg-[#f5f5f5] p-4 rounded-lg">
+                  <ul className="text-gray-600 space-y-2">
+                    <li>2호선 을지로입구역 하차</li>
+                    <li>1번 출구에서 도보 1분</li>
+                    <li className="text-sm text-gray-500 mt-2">
+                      * 지하철이 가장 편리합니다
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </motion.div>
             
             <motion.div
@@ -134,17 +155,21 @@ export default function Location() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="bg-white rounded-xl p-8 shadow-lg space-y-4 hover:shadow-xl transition-shadow"
             >
-              <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-              </div>
               <h3 className="text-xl font-medium text-gray-800">버스</h3>
-              <div className="space-y-2">
-                <p className="text-gray-600">간선버스</p>
-                <p className="text-sm text-gray-500">100, 200, 300</p>
-                <p className="text-gray-600 mt-4">지선버스</p>
-                <p className="text-sm text-gray-500">1000, 2000</p>
+              <div className="space-y-4">
+                <div className="bg-[#f5f5f5] p-4 rounded-lg">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-gray-600 font-medium">간선버스</p>
+                      <p className="text-sm text-gray-500">104, 105, 140, 421, 463, 507</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 font-medium">광역버스</p>
+                      <p className="text-sm text-gray-500">M4101, M4102, M4108, M5107</p>
+                    </div>
+                    <p className="text-sm text-gray-500">을지로입구역 하차</p>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>

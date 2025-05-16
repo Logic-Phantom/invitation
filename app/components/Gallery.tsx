@@ -9,11 +9,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 const images = [
-  'https://images.unsplash.com/photo-1583939003579-730e3918a45a',
-  'https://images.unsplash.com/photo-1583939411023-14783179e581',
-  'https://images.unsplash.com/photo-1606216794074-735e91aa2c92',
-  'https://images.unsplash.com/photo-1583939411023-14783179e581',
-  'https://images.unsplash.com/photo-1583939003579-730e3918a45a',
+  '/images/gallery/photo1.jpg',
+  '/images/gallery/photo2.jpg',
+  '/images/gallery/photo3.jpg',
+  '/images/gallery/photo4.jpg',
+  '/images/gallery/photo5.jpg',
 ];
 
 export default function Gallery() {
@@ -36,43 +36,10 @@ export default function Gallery() {
           <div className="w-20 h-px bg-gray-300 mx-auto" />
         </div>
 
-        <Swiper
-          effect={'coverflow'}
-          grabCursor={true}
-          centeredSlides={true}
-          slidesPerView={'auto'}
-          coverflowEffect={{
-            rotate: 20,
-            stretch: 0,
-            depth: 200,
-            modifier: 1,
-            slideShadows: false,
-          }}
-          pagination={{
-            clickable: true,
-            dynamicBullets: true,
-          }}
-          navigation={true}
-          modules={[EffectCoverflow, Pagination, Navigation]}
-          className="w-full max-w-5xl mx-auto"
-        >
-          {images.map((image, index) => (
-            <SwiperSlide key={index} className="w-[300px] md:w-[400px]">
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="aspect-[3/4] rounded-lg overflow-hidden shadow-xl"
-              >
-                <img
-                  src={image}
-                  alt={`Wedding photo ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                />
-              </motion.div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="text-center text-gray-500">
+          <p>아직 사진이 준비되지 않았습니다.</p>
+          <p className="mt-2 text-sm">추후 실제 웨딩 사진으로 업데이트될 예정입니다.</p>
+        </div>
       </motion.div>
     </section>
   );
