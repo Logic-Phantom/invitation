@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 모바일 청첩장
 
-## Getting Started
+Next.js와 Tailwind CSS를 사용한 모던한 모바일 청첩장 프로젝트입니다.
 
-First, run the development server:
+## 주요 기능
+
+- 애니메이션이 있는 반응형 디자인
+- 이미지 갤러리 (Swiper.js)
+- 카카오맵 위치 정보
+- 계좌번호 복사 기능
+
+## 기술 스택
+
+- Next.js 13+
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Swiper.js
+- 카카오맵 SDK
+
+## 시작하기
 
 ```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 프로덕션 빌드
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 환경 설정
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. `.env.local` 파일 생성:
+```env
+NEXT_PUBLIC_KAKAO_MAP_API_KEY=your_kakao_map_api_key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. 이미지 추가:
+- `public/images/` 디렉토리에 웨딩 사진 추가
+- `Gallery.tsx`의 이미지 경로 수정
 
-## Learn More
+3. 개인정보 수정:
+- `Header.tsx`: 신랑/신부 이름, 날짜, 장소
+- `Location.tsx`: 예식장 주소, 교통편
+- `Account.tsx`: 계좌번호 정보
 
-To learn more about Next.js, take a look at the following resources:
+## 배포
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Vercel을 통해 쉽게 배포할 수 있습니다:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. GitHub 저장소 연결
+2. 환경 변수 설정
+3. 배포 자동화
 
-## Deploy on Vercel
+## 라이선스
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License
