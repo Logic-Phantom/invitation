@@ -72,7 +72,6 @@ const Gallery = () => {
                     className="absolute bottom-0 left-0 right-0 p-10 text-white"
                   >
                     <h3 className="text-3xl md:text-4xl font-light mb-4">{image.description}</h3>
-                    <div className="w-24 h-0.5 bg-white/50" />
                   </motion.div>
                 </div>
               </SwiperSlide>
