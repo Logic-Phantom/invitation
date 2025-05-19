@@ -1,97 +1,110 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
+import { 
+  GROOM_NAME, GROOM_ACCOUNT_NUMBER, GROOM_FATHER_NAME, GROOM_FATHER_ACCOUNT_NUMBER, GROOM_MOTHER_NAME, GROOM_MOTHER_ACCOUNT_NUMBER,
+  BRIDE_NAME, BRIDE_ACCOUNT_NUMBER, BRIDE_FATHER_NAME, BRIDE_FATHER_ACCOUNT_NUMBER, BRIDE_MOTHER_NAME, BRIDE_MOTHER_ACCOUNT_NUMBER
+} from '../config';
 
-interface AccountInfo {
-  name: string;
-  bank: string;
-  number: string;
-  relation: string;
-}
-
-const accounts: AccountInfo[] = [
-  {
-    name: '홍길동',
-    bank: '국민은행',
-    number: '123-456-789012',
-    relation: '신랑'
-  },
-  {
-    name: '김미래',
-    bank: '신한은행',
-    number: '987-654-321098',
-    relation: '신부'
-  }
-];
-
-export default function Account() {
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-
-  const copyToClipboard = async (text: string, index: number) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 2000);
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-    }
+const Account = () => {
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert('계좌번호가 복사되었습니다.');
   };
 
   return (
-    <section className="py-32 bg-white">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-        viewport={{ once: true }}
-        className="container mx-auto px-4"
-      >
-        <div className="text-center space-y-8 mb-16">
-          <h2 className="text-3xl md:text-4xl font-light text-gray-800 tracking-wide">
-            마음 전하실 곳
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            축하의 마음을 담아 보내주셔서 감사합니다
-          </p>
-          <div className="w-20 h-px bg-gray-300 mx-auto" />
-        </div>
+    <section className="py-16 px-4 bg-gray-50">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-2xl font-light text-center mb-12">축하의 마음을 전하세요</h2>
         
-        <div className="max-w-3xl mx-auto space-y-6">
-          {accounts.map((account, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="bg-[#f9f9f9] rounded-xl p-8 space-y-6 hover:shadow-lg transition-all"
-            >
-              <div className="space-y-2 text-center">
-                <p className="text-sm text-gray-500">{account.relation}</p>
-                <h3 className="text-xl font-medium text-gray-800">{account.name}</h3>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-sm text-gray-500">{account.bank}</p>
-                      <p className="text-lg font-medium">{account.number}</p>
-                    </div>
-                    <button
-                      onClick={() => copyToClipboard(account.number, index)}
-                      className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm transition-colors"
-                    >
-                      {copiedIndex === index ? '복사완료' : '복사하기'}
-                    </button>
-                  </div>
+        <div className="space-y-8">
+          <div className="bg-white rounded-lg p-8 shadow-sm">
+            <h3 className="text-xl font-medium mb-6 text-center">신랑측 계좌번호</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="font-medium">{GROOM_NAME}</p>
+                  <p className="text-gray-600">{GROOM_ACCOUNT_NUMBER}</p>
                 </div>
+                <button
+                  onClick={() => copyToClipboard(GROOM_ACCOUNT_NUMBER)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
+                >
+                  복사
+                </button>
               </div>
-            </motion.div>
-          ))}
+              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="font-medium">{GROOM_FATHER_NAME}</p>
+                  <p className="text-gray-600">{GROOM_FATHER_ACCOUNT_NUMBER}</p>
+                </div>
+                <button
+                  onClick={() => copyToClipboard(GROOM_FATHER_ACCOUNT_NUMBER)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
+                >
+                  복사
+                </button>
+              </div>
+              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="font-medium">{GROOM_MOTHER_NAME}</p>
+                  <p className="text-gray-600">{GROOM_MOTHER_ACCOUNT_NUMBER}</p>
+                </div>
+                <button
+                  onClick={() => copyToClipboard(GROOM_MOTHER_ACCOUNT_NUMBER)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
+                >
+                  복사
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg p-8 shadow-sm">
+            <h3 className="text-xl font-medium mb-6 text-center">신부측 계좌번호</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="font-medium">{BRIDE_NAME}</p>
+                  <p className="text-gray-600">{BRIDE_ACCOUNT_NUMBER}</p>
+                </div>
+                <button
+                  onClick={() => copyToClipboard(BRIDE_ACCOUNT_NUMBER)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
+                >
+                  복사
+                </button>
+              </div>
+              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="font-medium">{BRIDE_FATHER_NAME}</p>
+                  <p className="text-gray-600">{BRIDE_FATHER_ACCOUNT_NUMBER}</p>
+                </div>
+                <button
+                  onClick={() => copyToClipboard(BRIDE_FATHER_ACCOUNT_NUMBER)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
+                >
+                  복사
+                </button>
+              </div>
+              <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <p className="font-medium">{BRIDE_MOTHER_NAME}</p>
+                  <p className="text-gray-600">{BRIDE_MOTHER_ACCOUNT_NUMBER}</p>
+                </div>
+                <button
+                  onClick={() => copyToClipboard(BRIDE_MOTHER_ACCOUNT_NUMBER)}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm transition-colors"
+                >
+                  복사
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
-} 
+};
+
+export default Account; 

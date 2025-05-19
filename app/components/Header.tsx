@@ -2,64 +2,78 @@
 
 import { motion } from 'framer-motion';
 
-export default function Header() {
+const Header = () => {
   return (
-    <motion.header 
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.5 }}
-      className="min-h-screen flex flex-col items-center justify-center relative"
-    >
-      <div 
-        className="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-800"
-      />
-      
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 1 }}
-        className="text-center space-y-12 relative z-10"
+    <div className="relative h-screen w-full overflow-hidden">
+      {/* 비디오 배경 */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover"
       >
-        <div className="space-y-6">
-          <p className="text-white tracking-widest text-sm">WEDDING INVITATION</p>
-          <h1 className="text-4xl md:text-5xl font-light text-white tracking-wider">
-            홍길동 ❤️ 김미래
-          </h1>
-        </div>
+        <source src="/videos/wedding-bg.mp4" type="video/mp4" />
+      </video>
 
-        <div className="w-20 h-px bg-white/50 mx-auto" />
+      {/* 오버레이 */}
+      <div className="absolute inset-0 bg-black bg-opacity-40" />
 
-        <div className="space-y-4 text-white/90">
-          <p className="font-light tracking-wide">
-            2024년 12월 31일 토요일 오후 2시
-          </p>
-          <p className="font-light">
-            보테가마지오 웨딩홀
-          </p>
-        </div>
-      </motion.div>
-
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 flex flex-col items-center text-white/70 space-y-2 z-10"
-      >
-        <p className="text-sm tracking-widest">SCROLL DOWN</p>
-        <svg 
-          className="w-6 h-6 animate-bounce" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
+      {/* 콘텐츠 */}
+      <div className="relative h-full flex flex-col items-center justify-center text-white px-4">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-4xl md:text-5xl font-light mb-4"
         >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M19 14l-7 7m0 0l-7-7m7 7V3" 
-          />
-        </svg>
-      </motion.div>
-    </motion.header>
+          WEDDING INVITATION
+        </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-2xl md:text-3xl font-light mb-8"
+        >
+          홍길동 & 김미영
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="text-lg md:text-xl text-center"
+        >
+          <p>2024년 05월 18일, 토요일 오후 1시</p>
+          <p className="mt-2">그랜드 웨딩홀, 3층 그랜드볼룸</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        >
+          <div className="animate-bounce">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </div>
+        </motion.div>
+      </div>
+    </div>
   );
-} 
+};
+
+export default Header; 
