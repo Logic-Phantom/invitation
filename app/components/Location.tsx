@@ -19,14 +19,14 @@ const Location = () => {
       window.kakao.maps.load(() => {
         const container = document.getElementById('map');
         const options = {
-          center: new window.kakao.maps.LatLng(37.5665, 126.9780), // 서울시청 좌표
+          center: new window.kakao.maps.LatLng(37.579617, 126.977041), // 경복궁 좌표
           level: 3
         };
 
         const map = new window.kakao.maps.Map(container, options);
         
         // 마커 생성
-        const markerPosition = new window.kakao.maps.LatLng(37.5665, 126.9780);
+        const markerPosition = new window.kakao.maps.LatLng(37.579617, 126.977041);
         const marker = new window.kakao.maps.Marker({
           position: markerPosition
         });
@@ -36,7 +36,7 @@ const Location = () => {
         const iwContent = `
           <div style="padding:10px;width:200px;text-align:center;">
             <strong>웨딩홀</strong><br>
-            서울특별시 중구 태평로1가
+            경복궁 (서울특별시 종로구 사직로 161)
           </div>
         `;
         const infowindow = new window.kakao.maps.InfoWindow({
@@ -64,7 +64,7 @@ const Location = () => {
         <div id="map" className="w-full h-[400px] rounded-lg shadow-lg" />
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold mb-2">웨딩홀</h3>
-          <p className="text-gray-600">서울특별시 중구 태평로1가</p>
+          <p className="text-gray-600">경복궁 (서울특별시 종로구 사직로 161)</p>
           <div className="mt-4 space-y-2">
             <p className="text-sm text-gray-500">
               <span className="font-medium">지하철:</span> 1호선 시청역 2번 출구
