@@ -3,6 +3,12 @@
 ## 프로젝트 개요
 이 프로젝트는 Next.js 13을 기반으로 한 모던 웹 기반의 웨딩 초대장 애플리케이션입니다. TypeScript와 Tailwind CSS를 사용하여 개발되었으며, 반응형 디자인을 지원합니다.
 
+## 배포 정보
+- **배포 URL**: [https://invitation-dusky-psi.vercel.app/](https://invitation-dusky-psi.vercel.app/)
+- **배포 플랫폼**: Vercel
+- **배포 상태**: Live
+- **자동 배포**: GitHub main 브랜치 push 시 자동 배포
+
 ## 기술 스택
 - **프레임워크**: Next.js 13.4.19
 - **언어**: TypeScript
@@ -63,6 +69,34 @@ npm run start
 # 또는
 yarn start
 ```
+
+## Vercel 배포 가이드
+
+### 1. Vercel 계정 설정
+1. [Vercel 웹사이트](https://vercel.com)에 접속
+2. GitHub 계정으로 로그인
+3. "New Project" 클릭
+
+### 2. 프로젝트 배포 설정
+1. GitHub 저장소 선택
+2. 프로젝트 설정:
+   - Framework Preset: Next.js
+   - Root Directory: ./
+   - Build Command: `next build`
+   - Output Directory: `.next`
+
+### 3. 환경 변수 설정
+Vercel 대시보드의 Project Settings > Environment Variables에서:
+- `NEXT_PUBLIC_KAKAO_MAP_API_KEY` 추가 (카카오맵 API 키)
+
+### 4. 자동 배포 설정
+- main 브랜치 push 시 자동 배포
+- 다른 브랜치 push 시 프리뷰 배포
+- Pull Request 생성 시 자동 프리뷰 배포
+
+### 5. 배포 확인
+- 배포 URL: [https://invitation-dusky-psi.vercel.app/](https://invitation-dusky-psi.vercel.app/)
+- 배포 상태: [Vercel 대시보드](https://vercel.com/lims-projects-54b4a420/invitation/FEMZz28fHJftFHC7nsgcwWm3VmDf)
 
 ## 개발 가이드라인
 - TypeScript를 사용하여 타입 안정성 확보
