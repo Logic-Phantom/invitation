@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { GROOM_NAME, BRIDE_NAME } from '../config';
 
 const Header = () => {
   return (
@@ -36,7 +37,7 @@ const Header = () => {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-2xl md:text-3xl font-light mb-8"
         >
-          홍길동 & 김미영
+          {GROOM_NAME} & {BRIDE_NAME}
         </motion.div>
 
         <motion.div

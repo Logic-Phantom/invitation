@@ -5,16 +5,16 @@ export const KAKAOTALK_SHARE_IMAGE = "https://cdn.pixabay.com/photo/2014/11/13/1
 export const WEDDING_DATE = "2024년 05월 01일, 수요일 오후 2시 00분";
 export const WEDDING_LOCATION = "○○○웨딩, 3층 그랜드홀";
 
-export const GROOM_NAME = "김철수";
+export const GROOM_NAME = "임채명";
 export const GROOM_ACCOUNT_NUMBER = "신한은행 110-123-456789";
-export const GROOM_FATHER_NAME = "김○○";
+export const GROOM_FATHER_NAME = "임영택";
 export const GROOM_FATHER_ACCOUNT_NUMBER = "신한은행 110-123-456789";
-export const GROOM_MOTHER_NAME = "박○○";
+export const GROOM_MOTHER_NAME = "김정혜";
 export const GROOM_MOTHER_ACCOUNT_NUMBER = "신한은행 110-123-456789";
 
-export const BRIDE_NAME = "이영희";
+export const BRIDE_NAME = "김서현";
 export const BRIDE_ACCOUNT_NUMBER = "국민은행 123-456-789012";
-export const BRIDE_FATHER_NAME = "이○○";
+export const BRIDE_FATHER_NAME = "김경복";
 export const BRIDE_FATHER_ACCOUNT_NUMBER = "국민은행 123-456-789012";
-export const BRIDE_MOTHER_NAME = "최○○";
+export const BRIDE_MOTHER_NAME = "박향미";
 export const BRIDE_MOTHER_ACCOUNT_NUMBER = "국민은행 123-456-789012"; 

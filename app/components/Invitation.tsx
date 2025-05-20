@@ -22,13 +22,12 @@ const Invitation = () => {
           저희 두 사람이 사랑의 이름으로 지켜나갈 수 있게<br />
           앞날을 축복해 주시면 감사하겠습니다.
         </motion.p>
-        <div className="mt-16 space-y-4">
-          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.8 }} viewport={{ once: true }} className="text-lg font-semibold text-purple-500">{GROOM_NAME} · {BRIDE_NAME}</motion.p>
-          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.8 }} viewport={{ once: true }} className="text-gray-500 text-base">
-            {GROOM_FATHER_NAME} · {GROOM_MOTHER_NAME}의 장남 {GROOM_NAME}<br />
-            {BRIDE_FATHER_NAME} · {BRIDE_MOTHER_NAME}의 장녀 {BRIDE_NAME}
-          </motion.p>
-        </div>
+        
+        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.8 }} viewport={{ once: true }} className="text-lg font-semibold text-purple-500">{GROOM_NAME} · {BRIDE_NAME}</motion.p>
+        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.8 }} viewport={{ once: true }} className="text-gray-500 text-base">
+          {GROOM_FATHER_NAME} · {GROOM_MOTHER_NAME}의 차남 {GROOM_NAME}<br />
+          {BRIDE_FATHER_NAME} · {BRIDE_MOTHER_NAME}의 차녀 {BRIDE_NAME}
+        </motion.p>
       </div>
     </motion.section>
   );
