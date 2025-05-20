@@ -45,12 +45,17 @@ const Gallery = () => {
             speed={1000}
             spaceBetween={0}
             slidesPerView={1}
+            loop={true}
             navigation={{
               nextEl: '.swiper-button-next',
               prevEl: '.swiper-button-prev',
             }}
             pagination={{ clickable: true }}
-            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true
+            }}
             className="h-full w-full"
           >
             {images.map((image, index) => (
