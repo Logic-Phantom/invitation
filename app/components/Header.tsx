@@ -2,20 +2,86 @@
 
 import { motion } from 'framer-motion';
 import { GROOM_NAME, BRIDE_NAME } from '../config';
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 const Header = () => {
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlayVideo = async () => {
+    if (videoRef.current) {
+      try {
+        await videoRef.current.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.log('Video play failed:', error);
+        setVideoError(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      // 비디오 로드 이벤트 리스너
+      const handleLoadedData = () => {
+        console.log('Video loaded successfully');
+        setIsVideoLoaded(true);
+        handlePlayVideo();
+      };
+
+      // 비디오 에러 이벤트 리스너
+      const handleError = (e: Event) => {
+        console.error('Video loading error:', e);
+        setVideoError(true);
+      };
+
+      videoElement.addEventListener('loadeddata', handleLoadedData);
+      videoElement.addEventListener('error', handleError);
+
+      // 비디오 소스 설정
+      videoElement.src = '/videos/wedding-bg.mp4';
+      videoElement.load();
+
+      return () => {
+        videoElement.removeEventListener('loadeddata', handleLoadedData);
+        videoElement.removeEventListener('error', handleError);
+      };
+    }
+  }, []);
+
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div 
+      className="relative h-screen w-full overflow-hidden"
+      onClick={handlePlayVideo}
+    >
       {/* 비디오 배경 */}
+      {(!isVideoLoaded || videoError) && (
+        <div className="absolute top-0 left-0 w-full h-full">
+          <Image
+            src="/images/wedding-bg-poster.png"
+            alt="Wedding Background"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      )}
       <video
+        ref={videoRef}
         autoPlay
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover"
-      >
-        <source src="/videos/wedding-bg.mp4" type="video/mp4" />
-      </video>
+        preload="auto"
+        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          isVideoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
+        }`}
+        style={{ objectFit: 'cover' }}
+      />
 
       {/* 오버레이 */}
       <div className="absolute inset-0 bg-black bg-opacity-30" />
