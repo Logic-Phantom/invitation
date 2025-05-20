@@ -42,10 +42,9 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
-  color: white !important;
+  width: 40px !important;
+  height: 40px !important;
   background: rgba(255, 255, 255, 0.2) !important;
-  width: 64px !important;
-  height: 64px !important;
   border-radius: 50%;
   transition: all 0.3s ease;
   display: flex !important;
@@ -62,12 +61,12 @@ body {
 
 .swiper-button-next:after,
 .swiper-button-prev:after {
-  display: none;
+  display: none !important;
 }
 
 .swiper-pagination-bullet {
-  width: 10px !important;
-  height: 10px !important;
+  width: 8px !important;
+  height: 8px !important;
   background: white !important;
   opacity: 0.5 !important;
   transition: all 0.3s ease;
