@@ -8,6 +8,7 @@ import Gallery from './components/Gallery';
 import Account from './components/Account';
 import Share from './components/Share';
 import PetalEffect from './components/PetalEffect';
+import Weather from './components/Weather';
 import { motion, Variants } from 'framer-motion';
 
 // 카카오맵 컴포넌트는 클라이언트 사이드에서만 렌더링되어야 합니다
@@ -39,6 +40,7 @@ export default function Home() {
         <Invitation />
         <Gallery />
         <Location />
+        <Weather />
         <Account />
         <Share />
       </motion.div>
