@@ -16,6 +16,7 @@ const Location = () => {
   const [infowindow, setInfowindow] = useState<any>(null);
   const [selectedRouteType, setSelectedRouteType] = useState<'walk' | 'bus' | 'car'>('walk');
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [currentPolyline, setCurrentPolyline] = useState<any>(null);
 
   // 개발 환경에서 테스트용 좌표 (서울역)
   const getDefaultLocation = () => {
@@ -109,8 +110,8 @@ const Location = () => {
             const endPos = new window.kakao.maps.LatLng(endLat, endLng);
 
             // 기존 경로 제거
-            if (map.getOverlayMapTypeId()) {
-              map.removeOverlayMapTypeId(window.kakao.maps.MapTypeId.TRAFFIC);
+            if (currentPolyline) {
+              currentPolyline.setMap(null);
             }
 
             // 경로 그리기
@@ -123,6 +124,7 @@ const Location = () => {
             });
 
             polyline.setMap(map);
+            setCurrentPolyline(polyline);
 
             // 경로가 모두 보이도록 지도 영역 조정
             const bounds = new window.kakao.maps.LatLngBounds();
@@ -159,6 +161,11 @@ const Location = () => {
             const startPos = new window.kakao.maps.LatLng(startLat, startLng);
             const endPos = new window.kakao.maps.LatLng(endLat, endLng);
 
+            // 기존 경로 제거
+            if (currentPolyline) {
+              currentPolyline.setMap(null);
+            }
+
             // 경로 그리기
             const polyline = new window.kakao.maps.Polyline({
               path: [startPos, endPos],
@@ -169,6 +176,7 @@ const Location = () => {
             });
 
             polyline.setMap(map);
+            setCurrentPolyline(polyline);
 
             // 경로가 모두 보이도록 지도 영역 조정
             const bounds = new window.kakao.maps.LatLngBounds();
