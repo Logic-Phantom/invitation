@@ -34,7 +34,7 @@ export default function Home() {
         initial="initial"
         animate="animate"
         variants={fadeInUp}
-        className="max-w-7xl mx-auto px-4 py-8 space-y-24"
+        className="max-w-7xl mx-auto px-4 py-8 space-y-12"
       >
         <Invitation />
         <Gallery />

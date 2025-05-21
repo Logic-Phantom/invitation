@@ -6,8 +6,11 @@ import Script from 'next/script'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: '우리의 결혼식에 초대합니다',
+  title: '채명 & 서현',
   description: '소중한 분들을 초대합니다',
+  icons: {
+    icon: '/images/favicon.png',
+  },
 }
 
 export default function RootLayout({

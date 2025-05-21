@@ -15,7 +15,7 @@ const Account = () => {
   };
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-b from-blue-50 via-pink-50 to-purple-50 rounded-2xl shadow-xl max-w-3xl mx-auto mb-12">
+    <section className="py-8 px-4 bg-gradient-to-b from-blue-50 via-pink-50 to-purple-50 rounded-2xl shadow-xl max-w-3xl mx-auto mb-6">
       <h2 className="text-2xl font-light text-center mb-12 text-purple-500">축하의 마음을 전하세요</h2>
       <div className="flex flex-col md:flex-row gap-8 justify-center">
         <button onClick={() => { setOpen(true); setType('groom'); }} className="flex-1 py-6 bg-white rounded-xl shadow hover:bg-pink-100 transition text-lg font-semibold text-pink-500">신랑측 계좌번호 보기</button>

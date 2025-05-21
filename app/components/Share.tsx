@@ -84,7 +84,7 @@ const Share = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="py-16 px-4 bg-gradient-to-b from-pink-50 via-blue-50 to-purple-50 rounded-2xl shadow-xl max-w-md mx-auto mb-12"
+      className="py-8 px-4 bg-gradient-to-b from-pink-50 via-blue-50 to-purple-50 rounded-2xl shadow-xl max-w-md mx-auto mb-6"
     >
       <h2 className="text-2xl font-light mb-8 text-pink-500 tracking-widest text-center">청첩장 공유하기</h2>
       <div className="space-y-4 text-center">

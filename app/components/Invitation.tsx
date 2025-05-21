@@ -9,7 +9,7 @@ const Invitation = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="py-20 px-4 text-center bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50 rounded-lg shadow-xl max-w-2xl mx-auto mb-12"
+      className="py-12 px-4 text-center bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50 rounded-lg shadow-xl max-w-2xl mx-auto mb-6"
     >
       <h2 className="text-3xl font-bold mb-10 text-pink-500 tracking-widest">초대합니다</h2>
       <div className="space-y-8 text-gray-700 leading-relaxed text-lg">
