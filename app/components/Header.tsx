@@ -14,13 +14,6 @@ const Header = () => {
   const handlePlayVideo = async () => {
     if (videoRef.current) {
       try {
-        // 모바일에서 자동 재생을 위한 설정
-        videoRef.current.muted = true;
-        videoRef.current.playsInline = true;
-        
-        // Vercel에서의 재생을 위한 추가 설정
-        videoRef.current.setAttribute('crossorigin', 'anonymous');
-        
         const playPromise = videoRef.current.play();
         
         if (playPromise !== undefined) {
@@ -52,25 +45,45 @@ const Header = () => {
         setVideoError(true);
       };
 
+      const handleCanPlay = () => {
+        console.log('Video can play');
+        if (!isPlaying) {
+          handlePlayVideo();
+        }
+      };
+
+      const handleWaiting = () => {
+        console.log('Video is buffering');
+      };
+
+      const handlePlaying = () => {
+        console.log('Video is playing');
+        setIsPlaying(true);
+      };
+
       videoElement.addEventListener('loadeddata', handleLoadedData);
       videoElement.addEventListener('error', handleError);
+      videoElement.addEventListener('canplay', handleCanPlay);
+      videoElement.addEventListener('waiting', handleWaiting);
+      videoElement.addEventListener('playing', handlePlaying);
 
-      // Vercel에서의 비디오 로딩을 위한 수정
-      const videoUrl = process.env.NEXT_PUBLIC_BASE_URL 
-        ? `${process.env.NEXT_PUBLIC_BASE_URL}/videos/wedding-bg.mp4`
-        : '/videos/wedding-bg.mp4';
-
-      // 비디오 소스 설정 전에 기존 소스 제거
-      videoElement.removeAttribute('src');
-      videoElement.load();
+      // 비디오 최적화 설정
+      videoElement.preload = 'auto';
+      videoElement.playsInline = true;
+      videoElement.muted = true;
+      videoElement.setAttribute('playsinline', '');
+      videoElement.setAttribute('webkit-playsinline', '');
       
-      // 새로운 소스 설정
-      videoElement.src = videoUrl;
+      // 비디오 소스 설정
+      videoElement.src = '/videos/wedding-bg.mp4';
       videoElement.load();
 
       return () => {
         videoElement.removeEventListener('loadeddata', handleLoadedData);
         videoElement.removeEventListener('error', handleError);
+        videoElement.removeEventListener('canplay', handleCanPlay);
+        videoElement.removeEventListener('waiting', handleWaiting);
+        videoElement.removeEventListener('playing', handlePlaying);
       };
     }
   }, []);
