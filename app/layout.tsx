@@ -1,9 +1,18 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Noto_Serif_KR, Noto_Sans_KR } from 'next/font/google'
 import './globals.css'
-import Script from 'next/script'
 
-const inter = Inter({ subsets: ['latin'] })
+const notoSerif = Noto_Serif_KR({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-noto-serif'
+})
+
+const notoSans = Noto_Sans_KR({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-noto-sans'
+})
 
 export const metadata: Metadata = {
   title: '채명 & 서현',
@@ -19,15 +28,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={`${notoSerif.variable} ${notoSans.variable}`}>
       <head>
-        <Script
-          src="https://developers.kakao.com/sdk/js/kakao.js"
-          strategy="beforeInteractive"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
-      <body className={inter.className}>
-        <main className="min-h-screen bg-white">
+      <body className={`${notoSans.className} antialiased`}>
+        <main className="min-h-screen bg-white text-gray-900">
           {children}
         </main>
       </body>

@@ -28,260 +28,281 @@ const Location = () => {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`;
-    document.head.appendChild(script);
+    const apiKey = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
+    
+    if (!apiKey) {
+      console.error('Kakao Map API Key is not defined');
+      return;
+    }
 
+    // 이미 스크립트가 로드되어 있는지 확인
+    if (document.querySelector('script[src*="dapi.kakao.com/v2/maps/sdk.js"]')) {
+      console.log('Kakao Maps script already loaded');
+      return;
+    }
+
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&libraries=services&autoload=false`;
+    script.async = true;
+    
     script.onload = () => {
-      console.log('Kakao Maps script loaded');
+      console.log('Kakao Maps script loaded successfully');
+      if (!window.kakao) {
+        console.error('Kakao object not found after script load');
+        return;
+      }
+
       window.kakao.maps.load(() => {
-        console.log('Kakao Maps initialized');
+        console.log('Kakao Maps initialized successfully');
         const container = document.getElementById('map');
         if (!container) {
           console.error('Map container not found');
           return;
         }
 
-        const options = {
-          center: new window.kakao.maps.LatLng(37.579617, 126.977041),
-          level: 3
-        };
+        try {
+          const options = {
+            center: new window.kakao.maps.LatLng(37.579617, 126.977041),
+            level: 3
+          };
 
-        const newMap = new window.kakao.maps.Map(container, options);
-        setMap(newMap);
-        
-        const markerPosition = new window.kakao.maps.LatLng(37.579617, 126.977041);
-        const newMarker = new window.kakao.maps.Marker({
-          position: markerPosition
-        });
-        newMarker.setMap(newMap);
-        setMarker(newMarker);
+          const newMap = new window.kakao.maps.Map(container, options);
+          setMap(newMap);
+          
+          const markerPosition = new window.kakao.maps.LatLng(37.579617, 126.977041);
+          const newMarker = new window.kakao.maps.Marker({
+            position: markerPosition
+          });
+          newMarker.setMap(newMap);
+          setMarker(newMarker);
 
-        const iwContent = `
-          <div style="padding:10px;width:200px;text-align:center;">
-            <strong>웨딩홀</strong><br>
-            경복궁 (서울특별시 종로구 사직로 161)
-          </div>
-        `;
-        const newInfowindow = new window.kakao.maps.InfoWindow({
-          content: iwContent
-        });
-        setInfowindow(newInfowindow);
+          const iwContent = `
+            <div style="padding:10px;width:200px;text-align:center;">
+              <strong>웨딩홀</strong><br>
+              경복궁 (서울특별시 종로구 사직로 161)
+            </div>
+          `;
+          const newInfowindow = new window.kakao.maps.InfoWindow({
+            content: iwContent
+          });
+          setInfowindow(newInfowindow);
 
-        window.kakao.maps.event.addListener(newMarker, 'click', function() {
-          newInfowindow.open(newMap, newMarker);
-        });
+          window.kakao.maps.event.addListener(newMarker, 'click', function() {
+            newInfowindow.open(newMap, newMarker);
+          });
 
-        setIsMapLoaded(true);
+          setIsMapLoaded(true);
+          console.log('Map setup completed successfully');
+        } catch (error) {
+          console.error('Error setting up map:', error);
+          alert('지도 설정 중 오류가 발생했습니다. 페이지를 새로고침해주세요.');
+        }
       });
     };
 
     script.onerror = (error) => {
       console.error('Error loading Kakao Maps script:', error);
+      alert('지도를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
+    };
+
+    document.head.appendChild(script);
+
+    return () => {
+      const scriptElement = document.querySelector('script[src*="dapi.kakao.com/v2/maps/sdk.js"]');
+      if (scriptElement) {
+        document.head.removeChild(scriptElement);
+      }
     };
   }, []);
 
   const showRoute = () => {
-    console.log('Show route button clicked');
-    console.log('Map loaded:', isMapLoaded);
-    console.log('Map instance:', map);
-    console.log('Marker instance:', marker);
-
     if (!map || !marker) {
       console.error('Map or marker not initialized');
+      alert('지도가 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
       return;
     }
 
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname.startsWith('192.168.');
     const isSecure = window.location.protocol === 'https:';
 
-    // 개발 환경에서는 위치 정보 요청 시도
-    if (isLocalhost || isSecure) {
-      if (navigator.geolocation) {
-        console.log('Getting current position...');
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            console.log('Current position:', position);
-            const startLat = position.coords.latitude;
-            const startLng = position.coords.longitude;
-            const endLat = 37.579617;
-            const endLng = 126.977041;
-
-            const startPos = new window.kakao.maps.LatLng(startLat, startLng);
-            const endPos = new window.kakao.maps.LatLng(endLat, endLng);
-
-            // 기존 경로 제거
-            if (currentPolyline) {
-              currentPolyline.setMap(null);
-            }
-
-            // 경로 그리기
-            const polyline = new window.kakao.maps.Polyline({
-              path: [startPos, endPos],
-              strokeWeight: 5,
-              strokeColor: '#FF0000',
-              strokeOpacity: 0.7,
-              strokeStyle: 'solid'
-            });
-
-            polyline.setMap(map);
-            setCurrentPolyline(polyline);
-
-            // 경로가 모두 보이도록 지도 영역 조정
-            const bounds = new window.kakao.maps.LatLngBounds();
-            bounds.extend(startPos);
-            bounds.extend(endPos);
-            map.setBounds(bounds);
-
-            // 경로 안내 정보 표시
-            const iwContent = `
-              <div style="padding:10px;width:200px;text-align:center;">
-                <strong>경로 안내</strong><br>
-                ${selectedRouteType === 'walk' ? '도보' : selectedRouteType === 'bus' ? '대중교통' : '차량'} 경로
-              </div>
-            `;
-            const routeInfowindow = new window.kakao.maps.InfoWindow({
-              content: iwContent,
-              position: startPos
-            });
-            routeInfowindow.open(map);
-
-            // 카카오맵 길찾기 페이지로 이동
-            const url = `https://map.kakao.com/link/to/경복궁,${endLat},${endLng}`;
-            window.open(url, '_blank');
-          },
-          (error) => {
-            console.error('Error getting current position:', error);
-            // 위치 정보 접근 실패 시 기본 위치(서울역) 사용
-            const defaultLocation = getDefaultLocation();
-            const startLat = defaultLocation.latitude;
-            const startLng = defaultLocation.longitude;
-            const endLat = 37.579617;
-            const endLng = 126.977041;
-
-            const startPos = new window.kakao.maps.LatLng(startLat, startLng);
-            const endPos = new window.kakao.maps.LatLng(endLat, endLng);
-
-            // 기존 경로 제거
-            if (currentPolyline) {
-              currentPolyline.setMap(null);
-            }
-
-            // 경로 그리기
-            const polyline = new window.kakao.maps.Polyline({
-              path: [startPos, endPos],
-              strokeWeight: 5,
-              strokeColor: '#FF0000',
-              strokeOpacity: 0.7,
-              strokeStyle: 'solid'
-            });
-
-            polyline.setMap(map);
-            setCurrentPolyline(polyline);
-
-            // 경로가 모두 보이도록 지도 영역 조정
-            const bounds = new window.kakao.maps.LatLngBounds();
-            bounds.extend(startPos);
-            bounds.extend(endPos);
-            map.setBounds(bounds);
-
-            // 경로 안내 정보 표시
-            const iwContent = `
-              <div style="padding:10px;width:200px;text-align:center;">
-                <strong>경로 안내 (기본 위치)</strong><br>
-                서울역에서 경복궁까지<br>
-                ${selectedRouteType === 'walk' ? '도보' : selectedRouteType === 'bus' ? '대중교통' : '차량'} 경로
-              </div>
-            `;
-            const routeInfowindow = new window.kakao.maps.InfoWindow({
-              content: iwContent,
-              position: startPos
-            });
-            routeInfowindow.open(map);
-
-            // 카카오맵 길찾기 페이지로 이동
-            const url = `https://map.kakao.com/link/to/경복궁,${endLat},${endLng}`;
-            window.open(url, '_blank');
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-          }
-        );
-      } else {
-        console.error('Geolocation is not supported');
-        alert('이 브라우저에서는 위치 정보를 지원하지 않습니다.');
-      }
-    } else {
-      // 프로덕션 환경에서 HTTPS가 아닌 경우
-      alert('보안 연결(HTTPS)이 필요합니다. 프로덕션 환경에서는 HTTPS를 사용해주세요.');
+    if (!isLocalhost && !isSecure) {
+      alert('보안 연결(HTTPS)이 필요합니다.');
+      return;
     }
+
+    const showRouteWithPosition = (startLat: number, startLng: number, isDefaultLocation: boolean = false) => {
+      try {
+        const endLat = 37.579617;
+        const endLng = 126.977041;
+
+        const startPos = new window.kakao.maps.LatLng(startLat, startLng);
+        const endPos = new window.kakao.maps.LatLng(endLat, endLng);
+
+        if (currentPolyline) {
+          currentPolyline.setMap(null);
+        }
+
+        const routeType = selectedRouteType === 'walk' ? 'walk' : 
+                        selectedRouteType === 'bus' ? 'transit' : 'car';
+        const url = `https://map.kakao.com/link/to/경복궁,${endLat},${endLng}?mode=${routeType}`;
+        window.open(url, '_blank');
+
+        const polyline = new window.kakao.maps.Polyline({
+          path: [startPos, endPos],
+          strokeWeight: 5,
+          strokeColor: '#333333',
+          strokeOpacity: 0.7,
+          strokeStyle: 'solid'
+        });
+
+        polyline.setMap(map);
+        setCurrentPolyline(polyline);
+
+        const bounds = new window.kakao.maps.LatLngBounds();
+        bounds.extend(startPos);
+        bounds.extend(endPos);
+        map.setBounds(bounds);
+
+        const iwContent = `
+          <div style="padding:10px;width:200px;text-align:center;">
+            <strong>경로 안내${isDefaultLocation ? ' (기본 위치)' : ''}</strong><br>
+            ${isDefaultLocation ? '서울역에서 경복궁까지<br>' : ''}
+            ${selectedRouteType === 'walk' ? '도보' : selectedRouteType === 'bus' ? '대중교통' : '차량'} 경로
+          </div>
+        `;
+        const routeInfowindow = new window.kakao.maps.InfoWindow({
+          content: iwContent,
+          position: startPos
+        });
+        routeInfowindow.open(map);
+      } catch (error) {
+        console.error('Error showing route:', error);
+        alert('경로 표시 중 오류가 발생했습니다. 다시 시도해주세요.');
+      }
+    };
+
+    const checkAndRequestLocation = () => {
+      if (navigator.geolocation) {
+        const options = {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 30000
+        };
+
+        // 먼저 권한 상태 확인
+        if (navigator.permissions && navigator.permissions.query) {
+          navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+            if (permissionStatus.state === 'denied') {
+              alert('위치 정보 접근이 거부되어 있습니다. 브라우저 설정에서 위치 정보 접근을 허용해주세요.');
+              return;
+            }
+            // 권한이 허용되었거나 prompt 상태인 경우 위치 정보 요청
+            requestLocation();
+          });
+        } else {
+          // permissions API를 지원하지 않는 브라우저의 경우 바로 위치 정보 요청
+          requestLocation();
+        }
+      } else {
+        alert('이 브라우저에서는 위치 정보를 사용할 수 없습니다.');
+      }
+    };
+
+    const requestLocation = () => {
+      const options = {
+        enableHighAccuracy: false,
+        timeout: 10000,
+        maximumAge: 30000
+      };
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const startLat = position.coords.latitude;
+          const startLng = position.coords.longitude;
+          showRouteWithPosition(startLat, startLng);
+        },
+        (error) => {
+          console.error('Error getting current position:', error);
+          
+          let errorMessage = '현재 위치를 가져오는데 실패했습니다.';
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage = '위치 정보 접근 권한이 거부되었습니다.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage = '위치 정보를 사용할 수 없습니다.';
+              break;
+            case error.TIMEOUT:
+              errorMessage = '위치 정보 요청 시간이 초과되었습니다.';
+              break;
+          }
+
+          alert(errorMessage);
+        },
+        options
+      );
+    };
+
+    checkAndRequestLocation();
   };
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-      className="py-16 px-4 bg-gradient-to-b from-purple-50 via-blue-50 to-pink-50 rounded-2xl shadow-xl max-w-5xl mx-auto mb-12"
-    >
-      <div className="flex flex-col items-center mb-6">
-        <FaMapMarkerAlt className="text-4xl text-pink-400 mb-2" />
-        <h2 className="text-2xl font-bold text-center text-blue-500 tracking-widest">오시는 길</h2>
+    <div className="space-y-6">
+      <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
+        <div id="map" className="w-full h-full" />
       </div>
-      <div className="flex flex-col md:flex-row gap-8 items-stretch">
-        <div className="flex-1 bg-white rounded-2xl shadow-lg p-2 flex flex-col">
-          <div id="map" className="w-full h-[350px] rounded-xl mb-4" />
-          <div className="flex gap-2 justify-center mb-4">
-            <button
-              onClick={() => setSelectedRouteType('walk')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-                selectedRouteType === 'walk' ? 'bg-blue-500 text-white' : 'bg-gray-100'
-              }`}
-            >
-              <FaWalking /> 도보
-            </button>
-            <button
-              onClick={() => setSelectedRouteType('bus')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-                selectedRouteType === 'bus' ? 'bg-blue-500 text-white' : 'bg-gray-100'
-              }`}
-            >
-              <FaBus /> 대중교통
-            </button>
-            <button
-              onClick={() => setSelectedRouteType('car')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg ${
-                selectedRouteType === 'car' ? 'bg-blue-500 text-white' : 'bg-gray-100'
-              }`}
-            >
-              <FaCar /> 차량
-            </button>
-          </div>
+
+      <div className="space-y-4">
+        <div className="flex items-center space-x-2">
+          <FaMapMarkerAlt className="text-gray-600" />
+          <span className="text-gray-600">서울특별시 종로구 사직로 161</span>
+        </div>
+
+        <div className="flex flex-wrap gap-4">
           <button
-            onClick={showRoute}
-            className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition-colors"
+            onClick={() => setSelectedRouteType('walk')}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-full border ${
+              selectedRouteType === 'walk'
+                ? 'bg-gray-900 text-white border-gray-900'
+                : 'bg-white text-gray-900 border-gray-300 hover:bg-gray-50'
+            }`}
           >
-            현재 위치에서 경로 안내
+            <FaWalking />
+            <span>도보</span>
+          </button>
+          <button
+            onClick={() => setSelectedRouteType('bus')}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-full border ${
+              selectedRouteType === 'bus'
+                ? 'bg-gray-900 text-white border-gray-900'
+                : 'bg-white text-gray-900 border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            <FaBus />
+            <span>대중교통</span>
+          </button>
+          <button
+            onClick={() => setSelectedRouteType('car')}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-full border ${
+              selectedRouteType === 'car'
+                ? 'bg-gray-900 text-white border-gray-900'
+                : 'bg-white text-gray-900 border-gray-300 hover:bg-gray-50'
+            }`}
+          >
+            <FaCar />
+            <span>차량</span>
           </button>
         </div>
-        <div className="flex-1 bg-white rounded-2xl shadow-lg p-8 flex flex-col justify-center">
-          <h3 className="text-lg font-semibold mb-2 text-purple-500 flex items-center gap-2">
-            <FaMapMarkerAlt className="inline text-pink-400" /> 웨딩홀
-          </h3>
-          <p className="text-gray-600 mb-4">경복궁 (서울특별시 종로구 사직로 161)</p>
-          <div className="mt-2 space-y-2">
-            <p className="text-sm text-gray-500">
-              <span className="font-medium">지하철:</span> 3호선 경복궁역 5번 출구 도보 5분
-            </p>
-            <p className="text-sm text-gray-500">
-              <span className="font-medium">버스:</span> 경복궁 정류장 하차
-            </p>
-          </div>
-        </div>
+
+        <button
+          onClick={showRoute}
+          className="w-full py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors"
+        >
+          길찾기
+        </button>
       </div>
-    </motion.section>
+    </div>
   );
 };
 

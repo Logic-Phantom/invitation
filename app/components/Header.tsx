@@ -26,14 +26,12 @@ const Header = () => {
   useEffect(() => {
     const videoElement = videoRef.current;
     if (videoElement) {
-      // 비디오 로드 이벤트 리스너
       const handleLoadedData = () => {
         console.log('Video loaded successfully');
         setIsVideoLoaded(true);
         handlePlayVideo();
       };
 
-      // 비디오 에러 이벤트 리스너
       const handleError = (e: Event) => {
         console.error('Video loading error:', e);
         setVideoError(true);
@@ -42,7 +40,6 @@ const Header = () => {
       videoElement.addEventListener('loadeddata', handleLoadedData);
       videoElement.addEventListener('error', handleError);
 
-      // 비디오 소스 설정
       videoElement.src = '/videos/wedding-bg.mp4';
       videoElement.load();
 
@@ -84,28 +81,42 @@ const Header = () => {
       />
 
       {/* 오버레이 */}
-      <div className="absolute inset-0 bg-black bg-opacity-30" />
+      <div className="absolute inset-0 bg-black bg-opacity-20" />
 
       {/* 콘텐츠 */}
-      <div className="relative h-full flex flex-col items-center justify-center text-[#bfa14a] px-4 select-none">
+      <div className="relative h-full flex flex-col items-center justify-center text-white px-4 select-none">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="flex flex-col items-center"
         >
-          <span className="text-xs md:text-sm tracking-widest mb-2 font-light text-[#bfa14a]" style={{ letterSpacing: '0.18em' }}>YOU'RE INVITED</span>
-          <span className="text-5xl md:text-6xl font-light mb-8 text-[#bfa14a]">6.27</span>
-          <span className="text-xl md:text-2xl tracking-[0.3em] mb-12 font-light text-[#bfa14a]">임채명 - 김서현</span>
+          <span className="text-sm md:text-base tracking-widest mb-4 font-light text-white" style={{ letterSpacing: '0.2em' }}>
+            2025년 6월 27일
+          </span>
         </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-2xl md:text-3xl font-serif mb-4 text-white">저희 결혼합니다</h1>
+          <p className="text-sm md:text-base text-white max-w-md mx-auto">
+            저희의 결혼 소식이 부담스럽지 않게 다가가길 바라며,<br />
+            편한 마음으로 오셔서 축하해주시면 감사하겠습니다.
+          </p>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="absolute bottom-20 w-full text-center flex flex-col items-center justify-center"
+          className="absolute bottom-20 w-full text-center"
         >
-          <span className="text-xs md:text-sm text-white mb-1 tracking-wide">2025년 6월 27일 금요일 오후 1시</span>
-          <span className="text-sm md:text-base font-medium text-white tracking-wide">DEAR HOTEL GRAND HALL</span>
+          <p className="text-sm md:text-base text-white mb-2">2025년 6월 27일 금요일 오후 1시</p>
+          <p className="text-base md:text-lg font-medium text-white">DEAR HOTEL GRAND HALL</p>
         </motion.div>
       </div>
     </div>

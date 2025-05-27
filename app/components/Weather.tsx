@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCloudSun } from 'react-icons/fa';
+import { FaCloudSun, FaSun, FaCloud, FaCloudRain, FaSnowflake } from 'react-icons/fa';
 
 interface WeatherData {
   temperature: string;
@@ -27,16 +27,13 @@ const Weather = () => {
         }
 
         const data = await response.json();
-        console.log('Weather data:', data);
 
         if (data.response?.body?.items?.item) {
           const items = data.response.body.items.item;
           
-          // 현재 시간의 날씨 정보 찾기
           const currentTemp = items.find((item: any) => item.category === 'TMP')?.fcstValue || '정보 없음';
           const currentWeather = items.find((item: any) => item.category === 'PTY')?.fcstValue || '0';
           
-          // 날씨 상태 코드를 텍스트로 변환
           const weatherText = {
             '0': '맑음',
             '1': '비',
@@ -63,37 +60,45 @@ const Weather = () => {
     fetchWeather();
   }, []);
 
-  return (
-    <motion.section
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-      className="py-6 px-4 bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50 rounded-xl shadow-lg max-w-2xl mx-auto mb-6"
-    >
-      <div className="flex flex-col items-center mb-2">
-        <FaCloudSun className="text-2xl text-yellow-400 mb-1" />
-        <h2 className="text-lg font-bold text-center text-blue-500 tracking-widest">결혼식 날씨</h2>
-        <p className="text-gray-500 mt-1 text-xs">2026년 6월 27일 예상 날씨</p>
-      </div>
+  const getWeatherIcon = (weatherCode: string) => {
+    switch (weatherCode) {
+      case '0':
+        return <FaSun className="text-4xl text-yellow-400" />;
+      case '1':
+        return <FaCloudRain className="text-4xl text-blue-400" />;
+      case '2':
+        return <FaCloudRain className="text-4xl text-blue-400" />;
+      case '3':
+        return <FaSnowflake className="text-4xl text-blue-200" />;
+      case '4':
+        return <FaCloudRain className="text-4xl text-blue-400" />;
+      default:
+        return <FaCloud className="text-4xl text-gray-400" />;
+    }
+  };
 
-      <div className="bg-white rounded-xl shadow p-4">
-        {loading ? (
-          <div className="text-center text-gray-500 text-sm">날씨 정보를 불러오는 중...</div>
-        ) : error ? (
-          <div className="text-center text-red-500 text-sm">{error}</div>
-        ) : weather ? (
-          <div className="flex flex-col items-center">
-            <div className="text-2xl font-bold text-blue-500 mb-1">
-              {weather.temperature}
-            </div>
-            <div className="text-gray-600 text-base">
-              {weather.weather}
+  return (
+    <div className="bg-white rounded-lg p-6 shadow-sm">
+      {loading ? (
+        <div className="text-center text-gray-500">날씨 정보를 불러오는 중...</div>
+      ) : error ? (
+        <div className="text-center text-red-500">{error}</div>
+      ) : weather ? (
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            {getWeatherIcon(weather.weather)}
+            <div>
+              <p className="text-2xl font-medium text-gray-900">{weather.temperature}</p>
+              <p className="text-gray-600">{weather.weather}</p>
             </div>
           </div>
-        ) : null}
-      </div>
-    </motion.section>
+          <div className="text-right">
+            <p className="text-sm text-gray-500">2025년 6월 27일</p>
+            <p className="text-sm text-gray-500">오후 1시</p>
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 };
 
