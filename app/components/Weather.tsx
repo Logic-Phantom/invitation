@@ -69,30 +69,26 @@ const Weather = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="py-16 px-4 bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50 rounded-2xl shadow-xl max-w-5xl mx-auto mb-12"
+      className="py-6 px-4 bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50 rounded-xl shadow-lg max-w-2xl mx-auto mb-6"
     >
-      <div className="flex flex-col items-center mb-8">
-        <FaCloudSun className="text-4xl text-yellow-400 mb-2" />
-        <h2 className="text-2xl font-bold text-center text-blue-500 tracking-widest">결혼식 날씨</h2>
-        <p className="text-gray-500 mt-2">2025년 6월 27일 예상 날씨</p>
+      <div className="flex flex-col items-center mb-2">
+        <FaCloudSun className="text-2xl text-yellow-400 mb-1" />
+        <h2 className="text-lg font-bold text-center text-blue-500 tracking-widest">결혼식 날씨</h2>
+        <p className="text-gray-500 mt-1 text-xs">2026년 6월 27일 예상 날씨</p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-lg p-8">
+      <div className="bg-white rounded-xl shadow p-4">
         {loading ? (
-          <div className="text-center text-gray-500">날씨 정보를 불러오는 중...</div>
+          <div className="text-center text-gray-500 text-sm">날씨 정보를 불러오는 중...</div>
         ) : error ? (
-          <div className="text-center text-red-500">{error}</div>
+          <div className="text-center text-red-500 text-sm">{error}</div>
         ) : weather ? (
           <div className="flex flex-col items-center">
-            <div className="text-4xl font-bold text-blue-500 mb-4">
+            <div className="text-2xl font-bold text-blue-500 mb-1">
               {weather.temperature}
             </div>
-            <div className="text-gray-600 text-xl mb-4">
+            <div className="text-gray-600 text-base">
               {weather.weather}
-            </div>
-            <div className="text-sm text-gray-500 text-center">
-              * 날씨 정보는 기상청 단기 예보 기준으로 제공됩니다.<br />
-              * 결혼식 날짜가 가까워질수록 더 정확한 날씨 정보를 확인하실 수 있습니다.
             </div>
           </div>
         ) : null}

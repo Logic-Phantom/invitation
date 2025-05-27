@@ -84,19 +84,19 @@ const Share = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="py-8 px-4 bg-gradient-to-b from-pink-50 via-blue-50 to-purple-50 rounded-2xl shadow-xl max-w-md mx-auto mb-6"
+      className="py-6 px-4 bg-gradient-to-b from-pink-50 via-blue-50 to-purple-50 rounded-xl shadow-lg max-w-sm mx-auto mb-6"
     >
-      <h2 className="text-2xl font-light mb-8 text-pink-500 tracking-widest text-center">청첩장 공유하기</h2>
-      <div className="space-y-4 text-center">
+      <h2 className="text-lg font-light mb-6 text-pink-500 tracking-widest text-center">청첩장 공유하기</h2>
+      <div className="space-y-3 text-center">
         <button
           onClick={handleKakaoShare}
-          className="w-full py-4 px-6 bg-yellow-400 text-yellow-900 rounded-lg hover:bg-yellow-300 transition-colors text-lg font-semibold shadow"
+          className="w-full py-3 px-4 bg-yellow-400 text-yellow-900 rounded-lg hover:bg-yellow-300 transition-colors text-base font-semibold shadow"
         >
           카카오톡으로 공유하기
         </button>
         <button
           onClick={handleShare}
-          className="w-full py-4 px-6 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-lg font-semibold shadow"
+          className="w-full py-3 px-4 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-base font-semibold shadow"
         >
           링크 복사하기
         </button>

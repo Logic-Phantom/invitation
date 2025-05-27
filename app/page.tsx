@@ -7,7 +7,6 @@ import Invitation from './components/Invitation';
 import Gallery from './components/Gallery';
 import Account from './components/Account';
 import Share from './components/Share';
-import PetalEffect from './components/PetalEffect';
 import Weather from './components/Weather';
 import { motion, Variants } from 'framer-motion';
 
@@ -29,7 +28,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-pink-50 via-purple-50 to-blue-50">
-      <PetalEffect />
       <Header />
       <motion.div
         initial="initial"
