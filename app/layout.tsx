@@ -18,7 +18,16 @@ export const metadata: Metadata = {
   title: '채명 & 서현',
   description: '소중한 분들을 초대합니다',
   icons: {
-    icon: '/images/favicon.png',
+    icon: [
+      { url: '/images/favicon.png' },
+      { url: '/favicon.ico' }
+    ],
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
   },
 }
 
@@ -29,9 +38,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className={`${notoSerif.variable} ${notoSans.variable}`}>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-      </head>
       <body className={`${notoSans.className} antialiased`}>
         <main className="min-h-screen bg-white text-gray-900">
           {children}
