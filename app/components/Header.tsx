@@ -73,7 +73,7 @@ const Header = () => {
       videoElement.addEventListener('playing', handlePlaying);
 
       // 비디오 최적화 설정
-      videoElement.preload = 'auto';
+      videoElement.preload = 'metadata';
       videoElement.playsInline = true;
       videoElement.muted = true;
       videoElement.setAttribute('playsinline', '');
@@ -90,6 +90,22 @@ const Header = () => {
       
       videoElement.appendChild(videoSource);
       videoElement.appendChild(videoSourceWebM);
+
+      // 모바일 디바이스 체크 및 최적화
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        // 모바일에서는 더 낮은 해상도로 시작
+        videoElement.setAttribute('playsinline', '');
+        videoElement.setAttribute('webkit-playsinline', '');
+        videoElement.setAttribute('x5-playsinline', '');
+        videoElement.setAttribute('x5-video-player-type', 'h5');
+        videoElement.setAttribute('x5-video-player-fullscreen', 'false');
+        
+        // 모바일에서의 캐싱 전략
+        videoElement.setAttribute('crossorigin', 'anonymous');
+        videoElement.setAttribute('preload', 'metadata');
+      }
+      
       videoElement.load();
 
       return () => {
@@ -127,7 +143,7 @@ const Header = () => {
         loop
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
           isVideoLoaded && !videoError && !isLoading ? 'opacity-100' : 'opacity-0'
         }`}
