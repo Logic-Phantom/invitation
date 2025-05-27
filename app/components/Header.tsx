@@ -9,24 +9,29 @@ const Header = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlayVideo = async () => {
     if (videoRef.current) {
       try {
+        setIsLoading(true);
         const playPromise = videoRef.current.play();
         
         if (playPromise !== undefined) {
           playPromise.then(() => {
             setIsPlaying(true);
+            setIsLoading(false);
           }).catch(error => {
             console.log('Video play failed:', error);
             setVideoError(true);
+            setIsLoading(false);
           });
         }
       } catch (error) {
         console.log('Video play failed:', error);
         setVideoError(true);
+        setIsLoading(false);
       }
     }
   };
@@ -68,7 +73,7 @@ const Header = () => {
       videoElement.addEventListener('playing', handlePlaying);
 
       // 비디오 최적화 설정
-      videoElement.preload = 'metadata';
+      videoElement.preload = 'auto';
       videoElement.playsInline = true;
       videoElement.muted = true;
       videoElement.setAttribute('playsinline', '');
@@ -103,7 +108,7 @@ const Header = () => {
       onClick={handlePlayVideo}
     >
       {/* 비디오 배경 */}
-      {(!isVideoLoaded || videoError) && (
+      {(!isVideoLoaded || videoError || isLoading) && (
         <div className="absolute top-0 left-0 w-full h-full">
           <Image
             src="/images/wedding-bg-poster.png"
@@ -111,6 +116,8 @@ const Header = () => {
             fill
             className="object-cover"
             priority
+            quality={90}
+            sizes="100vw"
           />
         </div>
       )}
@@ -120,9 +127,9 @@ const Header = () => {
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
-          isVideoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
+          isVideoLoaded && !videoError && !isLoading ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ objectFit: 'cover' }}
       />
