@@ -68,14 +68,23 @@ const Header = () => {
       videoElement.addEventListener('playing', handlePlaying);
 
       // 비디오 최적화 설정
-      videoElement.preload = 'auto';
+      videoElement.preload = 'metadata';
       videoElement.playsInline = true;
       videoElement.muted = true;
       videoElement.setAttribute('playsinline', '');
       videoElement.setAttribute('webkit-playsinline', '');
       
-      // 비디오 소스 설정
-      videoElement.src = '/videos/wedding-bg.mp4';
+      // 비디오 소스 설정 - WebM 포맷 추가
+      const videoSource = document.createElement('source');
+      videoSource.src = '/videos/wedding-bg.mp4';
+      videoSource.type = 'video/mp4';
+      
+      const videoSourceWebM = document.createElement('source');
+      videoSourceWebM.src = '/videos/wedding-bg.webm';
+      videoSourceWebM.type = 'video/webm';
+      
+      videoElement.appendChild(videoSource);
+      videoElement.appendChild(videoSourceWebM);
       videoElement.load();
 
       return () => {
@@ -111,7 +120,7 @@ const Header = () => {
         loop
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
           isVideoLoaded && !videoError ? 'opacity-100' : 'opacity-0'
         }`}
