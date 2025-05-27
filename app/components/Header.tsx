@@ -14,8 +14,23 @@ const Header = () => {
   const handlePlayVideo = async () => {
     if (videoRef.current) {
       try {
-        await videoRef.current.play();
-        setIsPlaying(true);
+        // 모바일에서 자동 재생을 위한 설정
+        videoRef.current.muted = true;
+        videoRef.current.playsInline = true;
+        
+        // Vercel에서의 재생을 위한 추가 설정
+        videoRef.current.setAttribute('crossorigin', 'anonymous');
+        
+        const playPromise = videoRef.current.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            setIsPlaying(true);
+          }).catch(error => {
+            console.log('Video play failed:', error);
+            setVideoError(true);
+          });
+        }
       } catch (error) {
         console.log('Video play failed:', error);
         setVideoError(true);
@@ -40,7 +55,17 @@ const Header = () => {
       videoElement.addEventListener('loadeddata', handleLoadedData);
       videoElement.addEventListener('error', handleError);
 
-      videoElement.src = '/videos/wedding-bg.mp4';
+      // Vercel에서의 비디오 로딩을 위한 수정
+      const videoUrl = process.env.NEXT_PUBLIC_BASE_URL 
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}/videos/wedding-bg.mp4`
+        : '/videos/wedding-bg.mp4';
+
+      // 비디오 소스 설정 전에 기존 소스 제거
+      videoElement.removeAttribute('src');
+      videoElement.load();
+      
+      // 새로운 소스 설정
+      videoElement.src = videoUrl;
       videoElement.load();
 
       return () => {
