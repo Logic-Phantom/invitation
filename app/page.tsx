@@ -37,7 +37,13 @@ export default function Home() {
         className="max-w-4xl mx-auto px-4 py-16 space-y-24"
       >
         {/* 신랑/신부 소개 섹션 */}
-        <section className="text-center">
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
           <h2 className="section-title">신랑 & 신부</h2>
           <div className="grid grid-cols-2 gap-8">
             <div className="space-y-4">
@@ -71,10 +77,16 @@ export default function Home() {
               <p className="text-gray-600">김경복 · 박향미의 차녀</p>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* 웨딩 인터뷰 섹션 */}
-        <section className="text-center">
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
           <h2 className="section-title">웨딩 인터뷰</h2>
           <div className="space-y-8">
             <div className="space-y-4">
@@ -96,37 +108,62 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* 갤러리 섹션 */}
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="section-title">갤러리</h2>
           <Gallery />
-        </section>
+        </motion.section>
 
         {/* 위치 정보 섹션 */}
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="section-title">오시는 길</h2>
           <Location />
-        </section>
+        </motion.section>
 
         {/* 날씨 정보 섹션 */}
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="section-title">예상 날씨</h2>
           <Weather />
-        </section>
+        </motion.section>
 
         {/* 계좌 정보 섹션 */}
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="section-title">마음 전하실 곳</h2>
           <Account />
-        </section>
+        </motion.section>
 
         {/* 공유하기 섹션 */}
-        <section>
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="section-title mb-2">공유하기</h2>
           <Share />
-        </section>
+        </motion.section>
       </motion.div>
     </main>
   );
