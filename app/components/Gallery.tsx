@@ -37,7 +37,7 @@ const images = [
 const Gallery = () => {
   return (
     <div className="w-full">
-      <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
+      <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
         <Swiper
           modules={[EffectFade, Navigation, Pagination, Autoplay]}
           effect="fade"
