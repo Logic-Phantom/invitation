@@ -143,9 +143,9 @@ const Location = () => {
           currentPolyline.setMap(null);
         }
 
-        const routeType = selectedRouteType === 'walk' ? 'walk' : 
-                        selectedRouteType === 'bus' ? 'transit' : 'car';
-                        const url = `https://map.kakao.com/link/to/경복궁,${endLat},${endLng}?mode=${routeType}&from=${startLat},${startLng}`;
+        const routeType = selectedRouteType === 'walk' ? 'pedestrian' : 
+                        selectedRouteType === 'bus' ? 'public' : 'car';
+        const url = `https://map.kakao.com/link/to/경복궁,${endLat},${endLng}?mode=${routeType}&from=${startLat},${startLng}`;
         window.open(url, '_blank');
 
         const polyline = new window.kakao.maps.Polyline({
