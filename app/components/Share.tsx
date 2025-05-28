@@ -182,21 +182,20 @@ const Share = () => {
       className="py-16 bg-white"
     >
       <div className="max-w-4xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">청첩장 공유하기</h2>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
             onClick={shareKakao}
             className="flex items-center justify-center gap-2 px-6 py-3 bg-[#FEE500] text-[#3C1E1E] rounded-full hover:bg-[#FDD835] transition-colors duration-300 shadow-md"
           >
             <FaShareAlt className="w-5 h-5" />
-            <span>카카오톡으로 공유하기</span>
+            <span>카카오톡으로 공유</span>
           </button>
           <button
             onClick={handleShare}
             className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-100 text-gray-800 rounded-full hover:bg-gray-200 transition-colors duration-300 shadow-md"
           >
             <FaShareAlt className="w-5 h-5" />
-            <span>링크 공유하기</span>
+            <span>링크 공유</span>
           </button>
         </div>
       </div>

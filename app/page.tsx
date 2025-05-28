@@ -124,7 +124,7 @@ export default function Home() {
 
         {/* 공유하기 섹션 */}
         <section>
-          <h2 className="section-title">공유하기</h2>
+          <h2 className="section-title mb-2">공유하기</h2>
           <Share />
         </section>
       </motion.div>
