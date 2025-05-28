@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Header from './components/Header';
@@ -17,6 +17,34 @@ const Location = dynamic(() => import('./components/Location'), {
 });
 
 export default function Home() {
+  const [elapsedTime, setElapsedTime] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const startDate = new Date('2015-06-27');
+      const now = new Date();
+      const diff = now.getTime() - startDate.getTime();
+      
+      const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+      const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+      const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      setElapsedTime(`${years}년 ${months}개월 ${days}일 ${hours}시 ${minutes}분 ${seconds}초`);
+    };
+
+    // 초기 실행
+    updateTime();
+    
+    // 1초마다 업데이트
+    const interval = setInterval(updateTime, 1000);
+
+    // 컴포넌트 언마운트 시 인터벌 정리
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     // 페이지 로드 시 스크롤을 맨 위로
     window.scrollTo(0, 0);
@@ -44,14 +72,10 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="text-center py-6"
         >
-          <h2 className="section-title mb-4">우리가 만난 날</h2>
-          <div className="flex flex-col items-center gap-3">
-            <p className="text-xl font-serif text-gray-800">2015년 06월 27일</p>
-            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-pink-50 rounded-full">
-              <span className="text-sm font-light text-gray-600">D+</span>
-              <span className="text-2xl font-serif text-pink-500">
-                {Math.floor((new Date().getTime() - new Date('2015-06-27').getTime()) / (1000 * 60 * 60 * 24))}
-              </span>
+          <h2 className="section-title mb-4">함께한 시간</h2>
+          <div className="flex flex-col items-center">
+            <div className="text-gray-600 text-xl">
+              {elapsedTime}
             </div>
           </div>
         </motion.section>
