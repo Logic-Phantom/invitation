@@ -36,6 +36,26 @@ export default function Home() {
         variants={fadeInUp}
         className="max-w-4xl mx-auto px-4 py-16 space-y-24"
       >
+        {/* 만난 날짜 & D-day 섹션 */}
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center py-6"
+        >
+          <h2 className="section-title mb-4">우리가 만난 날</h2>
+          <div className="flex flex-col items-center gap-3">
+            <p className="text-xl font-serif text-gray-800">2015년 06월 27일</p>
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-pink-50 rounded-full">
+              <span className="text-sm font-light text-gray-600">D+</span>
+              <span className="text-2xl font-serif text-pink-500">
+                {Math.floor((new Date().getTime() - new Date('2015-06-27').getTime()) / (1000 * 60 * 60 * 24))}
+              </span>
+            </div>
+          </div>
+        </motion.section>
+
         {/* 신랑/신부 소개 섹션 */}
         <motion.section
           initial={{ opacity: 0, y: 40 }}
