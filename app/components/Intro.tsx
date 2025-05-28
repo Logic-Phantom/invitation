@@ -17,8 +17,8 @@ const Intro = () => {
           저희 두 사람의 새로운 시작을 함께 축하해 주시면 감사하겠습니다.
         </p>
         <div className="space-y-2">
-          <p className="text-gray-600 font-light">신랑 김민수</p>
-          <p className="text-gray-600 font-light">신부 이지은</p>
+          <p className="text-gray-600 font-light">신랑 </p>
+          <p className="text-gray-600 font-light">신부 </p>
         </div>
       </div>
     </motion.section>

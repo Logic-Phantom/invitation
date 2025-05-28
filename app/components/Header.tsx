@@ -162,7 +162,7 @@ const Header = () => {
           className="flex flex-col items-center"
         >
           <span className="text-sm md:text-base tracking-widest mb-4 font-light text-white" style={{ letterSpacing: '0.2em' }}>
-            2025년 6월 27일
+            2026년 06월 27일
           </span>
         </motion.div>
 
@@ -185,7 +185,7 @@ const Header = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="absolute bottom-20 w-full text-center"
         >
-          <p className="text-sm md:text-base text-white mb-2">2025년 6월 27일 금요일 오후 1시</p>
+          <p className="text-sm md:text-base text-white mb-2">2026년 06월 27일 금요일 오후 1시</p>
           <p className="text-base md:text-lg font-medium text-white">DEAR HOTEL GRAND HALL</p>
         </motion.div>
       </div>

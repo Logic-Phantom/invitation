@@ -50,10 +50,10 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-xl font-serif">신랑 임채명</h3>
-              <p className="text-gray-600">93년 8월 3일</p>
-              <p className="text-gray-600">서울 강동구</p>
+              <p className="text-gray-600">96년 9월 27일</p>
+              <p className="text-gray-600">서울 양천구</p>
               <p className="text-gray-600">IT 개발자 💻</p>
-              <p className="text-gray-600">임OO · 김OO의 차남</p>
+              <p className="text-gray-600">임영택 · 김정혜의 차남</p>
             </div>
             <div className="space-y-4">
               <div className="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
@@ -65,10 +65,10 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-xl font-serif">신부 김서현</h3>
-              <p className="text-gray-600">95년 8월 3일</p>
-              <p className="text-gray-600">경기도 용인</p>
-              <p className="text-gray-600">디자이너 🎨</p>
-              <p className="text-gray-600">김OO · 이OO의 장녀</p>
+              <p className="text-gray-600">96년 5월 10일</p>
+              <p className="text-gray-600">서울 양천구</p>
+              <p className="text-gray-600">IT 회사 연구원 🎨</p>
+              <p className="text-gray-600">김경복 · 박향미의 차녀</p>
             </div>
           </div>
         </section>
@@ -81,7 +81,7 @@ export default function Home() {
               <h3 className="text-lg font-medium">1. 결혼하시는 소감이 어떠세요?</h3>
               <div className="space-y-4">
                 <p className="text-gray-600">
-                  <span className="font-medium">🤵🏻‍♂️ 도연</span><br />
+                  <span className="font-medium">🤵🏻‍♂️ 채명</span><br />
                   인생은 지금부터 시작인 것 같아요.<br />
                   앞으로 매일 함께 맛있는 밥을 먹고, 함께 기뻐하고, 함께 여행하고<br />
                   모든 것을 언제나 함께할 수 있다는 생각에 벌써부터 행복합니다.😁

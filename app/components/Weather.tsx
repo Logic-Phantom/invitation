@@ -93,7 +93,7 @@ const Weather = () => {
             </div>
           </div>
           <div className="text-right">
-            <p className="text-sm text-gray-500">2025년 6월 27일</p>
+            <p className="text-sm text-gray-500">2026년 06월 27일</p>
             <p className="text-sm text-gray-500">오후 1시</p>
           </div>
         </div>
