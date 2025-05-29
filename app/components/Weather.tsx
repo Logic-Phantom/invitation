@@ -77,27 +77,139 @@ const Weather = () => {
     }
   };
 
+  // 6월 달력 데이터 생성
+  const generateCalendar = () => {
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    const firstDay = new Date(2026, 5, 1).getDay(); // 6월 1일의 요일
+    const lastDate = new Date(2026, 6, 0).getDate(); // 6월의 마지막 날짜
+    const calendar = [];
+    
+    // 요일 헤더
+    calendar.push(
+      <div key="header" className="grid grid-cols-7 gap-px mb-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-t-lg overflow-hidden">
+        {days.map((day, index) => (
+          <div 
+            key={day} 
+            className={`text-center py-3 text-sm font-medium ${
+              index === 0 
+                ? 'text-red-500 bg-red-50/50' 
+                : index === 6 
+                ? 'text-blue-500 bg-blue-50/50' 
+                : 'text-gray-600 bg-white/80'
+            }`}
+          >
+            {day}
+          </div>
+        ))}
+      </div>
+    );
+
+    // 날짜 그리드
+    let date = 1;
+    const rows = [];
+    let isLastRowEmpty = true;
+    
+    for (let i = 0; i < 5; i++) {
+      const cells = [];
+      let hasDate = false;
+      
+      for (let j = 0; j < 7; j++) {
+        if (i === 0 && j < firstDay) {
+          cells.push(
+            <div 
+              key={`empty-${j}`} 
+              className="h-14 bg-white/50 border border-gray-100/50"
+            ></div>
+          );
+        } else if (date > lastDate) {
+          cells.push(
+            <div 
+              key={`empty-end-${j}`} 
+              className="h-14 bg-white/50 border border-gray-100/50"
+            ></div>
+          );
+        } else {
+          hasDate = true;
+          const isWeddingDay = date === 27;
+          cells.push(
+            <div
+              key={date}
+              className={`h-14 flex items-center justify-center text-sm border border-gray-100/50 transition-all duration-200 hover:shadow-md ${
+                isWeddingDay
+                  ? 'bg-gradient-to-br from-pink-50 to-pink-100/50 text-pink-600 font-bold relative group'
+                  : j === 0
+                  ? 'text-red-500 bg-red-50/30 hover:bg-red-50/50'
+                  : j === 6
+                  ? 'text-blue-500 bg-blue-50/30 hover:bg-blue-50/50'
+                  : 'text-gray-600 bg-white/80 hover:bg-gray-50'
+              }`}
+            >
+              {date}
+              {isWeddingDay && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full border-2 border-pink-400/80 flex items-center justify-center shadow-lg shadow-pink-200/50 transform transition-transform duration-300 group-hover:scale-110">
+                    <span className="relative z-10">{date}</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+          date++;
+        }
+      }
+      
+      if (hasDate) {
+        rows.push(
+          <div key={i} className="grid grid-cols-7 gap-px">
+            {cells}
+          </div>
+        );
+      }
+    }
+    calendar.push(...rows);
+    
+    return calendar;
+  };
+
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm">
-      {loading ? (
-        <div className="text-center text-gray-500">날씨 정보를 불러오는 중...</div>
-      ) : error ? (
-        <div className="text-center text-red-500">{error}</div>
-      ) : weather ? (
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            {getWeatherIcon(weather.weather)}
-            <div>
-              <p className="text-2xl font-medium text-gray-900">{weather.temperature}</p>
-              <p className="text-gray-600">{weather.weather}</p>
+    <div className="space-y-4">
+      {/* 날씨 정보 섹션 */}
+      <div className="bg-white rounded-lg p-6 shadow-sm">
+        {loading ? (
+          <div className="text-center text-gray-500">날씨 정보를 불러오는 중...</div>
+        ) : error ? (
+          <div className="text-center text-red-500">{error}</div>
+        ) : weather ? (
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              {getWeatherIcon(weather.weather)}
+              <div>
+                <p className="text-2xl font-medium text-gray-900">{weather.temperature}</p>
+                <p className="text-gray-600">{weather.weather}</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-sm text-gray-500">2026년 06월 27일</p>
+              <p className="text-sm text-gray-500">오후 1시</p>
             </div>
           </div>
-          <div className="text-right">
-            <p className="text-sm text-gray-500">2026년 06월 27일</p>
-            <p className="text-sm text-gray-500">오후 1시</p>
-          </div>
+        ) : null}
+      </div>
+
+      {/* 캘린더 섹션 */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white rounded-lg p-6 shadow-sm"
+      >
+        <div className="text-center mb-6">
+          <p className="text-sm text-gray-500 mt-1">웨딩데이</p>
         </div>
-      ) : null}
+        <div className="calendar border border-gray-200/80 rounded-lg overflow-hidden shadow-lg shadow-gray-100/50 backdrop-blur-sm">
+          {generateCalendar()}
+        </div>
+      </motion.div>
     </div>
   );
 };

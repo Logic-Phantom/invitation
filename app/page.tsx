@@ -9,11 +9,16 @@ import Gallery from './components/Gallery';
 import Account from './components/Account';
 import Share from './components/Share';
 import Weather from './components/Weather';
+// import Calendar from './components/Calendar';
 import { motion, Variants } from 'framer-motion';
 
 // 카카오맵 컴포넌트는 클라이언트 사이드에서만 렌더링되어야 합니다
 const Location = dynamic(() => import('./components/Location'), {
   loading: () => <div className="h-[400px] bg-gray-100 rounded-lg flex items-center justify-center">Loading map...</div>
+});
+
+const Calendar = dynamic(() => import('./components/Calendar'), {
+  loading: () => <div className="h-[100px] bg-gray-100 rounded-lg flex items-center justify-center">Loading calendar...</div>
 });
 
 export default function Home() {
@@ -183,7 +188,7 @@ export default function Home() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="section-title">예상 날씨</h2>
+          <h2 className="section-title">날씨/일정</h2>
           <Weather />
         </motion.section>
 
