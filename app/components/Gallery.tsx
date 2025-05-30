@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFade, Navigation, Thumbs, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 // Swiper 스타일 import
 import 'swiper/css';
@@ -42,6 +42,7 @@ const images = [
 
 const Gallery = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const mainSwiperRef = useRef<any>(null);
   return (
     <div className="w-full">
       <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden">
@@ -64,6 +65,12 @@ const Gallery = () => {
             pauseOnMouseEnter: true
           }}
           className="h-full w-full"
+          onSwiper={(swiper) => { mainSwiperRef.current = swiper; }}
+          onSlideChange={(swiper) => {
+            if (thumbsSwiper && thumbsSwiper.slideTo) {
+              thumbsSwiper.slideTo(swiper.realIndex, 300, true);
+            }
+          }}
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
@@ -98,25 +105,27 @@ const Gallery = () => {
       </div>
       {/* 썸네일 Swiper를 메인 Swiper 바깥에 분리하여 배치 */}
       <div className="w-full flex justify-center mt-4 overflow-x-auto">
-        <div className="max-w-full w-full">
+        <div className="max-w-full w-full bg-[#f8faff] rounded-xl py-4 px-2 shadow-sm">
           <Swiper
             modules={[Thumbs]}
             onSwiper={setThumbsSwiper}
             slidesPerView="auto"
             spaceBetween={12}
             watchSlidesProgress
-            loop={true}
+            loop={false}
+            centeredSlides={true}
+            slideToClickedSlide={true}
             className="!h-24"
           >
             {images.map((image, idx) => (
-              <SwiperSlide key={idx} className="!w-24 !h-24 bg-white">
-                <div className="w-24 h-24 overflow-hidden border-2 border-transparent transition-all duration-200">
+              <SwiperSlide key={idx} className="!w-24 !h-24">
+                <div className="w-24 h-24 overflow-hidden border-2 border-transparent rounded-lg shadow transition-all duration-200">
                   <Image
                     src={image.src}
                     alt={image.alt}
                     width={96}
                     height={96}
-                    className="object-cover opacity-50 bg-white"
+                    className="object-cover opacity-50 rounded-lg"
                   />
                 </div>
               </SwiperSlide>

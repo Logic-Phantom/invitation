@@ -16,7 +16,7 @@ const Invitation = () => {
         <img 
           src="/images/wedding-text.png" 
           alt="청첩장 문구" 
-          className="w-full max-w-[320px] h-auto object-contain" 
+          className="w-full max-w-[240px] h-auto object-contain opacity-70" 
           style={{ aspectRatio: 'auto' }}
         />
       </div>
