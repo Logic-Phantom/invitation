@@ -12,16 +12,13 @@ const Invitation = () => {
       className="text-center py-8"
     >
       <h2 className="section-title mb-6">초대합니다</h2>
-      <div className="space-y-6 text-gray-700 text-base md:text-lg max-w-md mx-auto leading-relaxed">
-        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }} viewport={{ once: true }}>
-          서로 마주 보며 다져온 사랑을<br />
-          이제 함께 한곳을 바라보며 걸어갈 수 있는<br />
-          큰 사랑으로 키우고자 합니다.
-        </motion.p>
-        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }} viewport={{ once: true }}>
-          저희 두 사람이 사랑의 이름으로 <br/>지켜나갈 수 있게<br />
-          앞날을 축복해 주시면 <br/>감사하겠습니다.
-        </motion.p>
+      <div className="space-y-6 text-gray-700 text-base md:text-lg max-w-md mx-auto leading-relaxed flex justify-center">
+        <img 
+          src="/images/wedding-text.png" 
+          alt="청첩장 문구" 
+          className="w-full max-w-[320px] h-auto object-contain" 
+          style={{ aspectRatio: 'auto' }}
+        />
       </div>
     </motion.section>
   );

@@ -105,6 +105,7 @@ const Gallery = () => {
             slidesPerView="auto"
             spaceBetween={12}
             watchSlidesProgress
+            loop={true}
             className="!h-24"
           >
             {images.map((image, idx) => (
