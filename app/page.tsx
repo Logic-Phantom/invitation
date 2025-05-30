@@ -69,6 +69,26 @@ export default function Home() {
         variants={fadeInUp}
         className="max-w-4xl mx-auto px-4 py-16 space-y-24"
       >
+        {/* 신랑/신부 소개 섹션 */}
+        <motion.section
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
+          <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <p className="text-gray-600">임영택 · 김정혜의 차남</p>
+              <h3 className="text-xl font-serif">신랑 임채명</h3>
+            </div>
+            <div className="space-y-4">
+              <p className="text-gray-600">김경복 · 박향미의 차녀</p>
+              <h3 className="text-xl font-serif">신부 김서현</h3>
+            </div>
+          </div>
+        </motion.section>
+
         {/* 만난 날짜 & D-day 섹션 */}
         <motion.section
           initial={{ opacity: 0, y: 40 }}
@@ -85,27 +105,6 @@ export default function Home() {
             <div className="mt-6 text-sm md:text-base text-gray-500 max-w-md mx-auto leading-relaxed">
               저희의 결혼 소식이 부담스럽지 않게 다가가길 바라며,<br />
               편한 마음으로 오셔서 축하해주시면 감사하겠습니다.
-            </div>
-          </div>
-        </motion.section>
-
-        {/* 신랑/신부 소개 섹션 */}
-        <motion.section
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
-        >
-          <h2 className="section-title">신랑 & 신부</h2>
-          <div className="grid grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <h3 className="text-xl font-serif">신랑 임채명</h3>
-              <p className="text-gray-600">임영택 · 김정혜의 차남</p>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-xl font-serif">신부 김서현</h3>
-              <p className="text-gray-600">김경복 · 박향미의 차녀</p>
             </div>
           </div>
         </motion.section>
