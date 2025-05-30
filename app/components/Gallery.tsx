@@ -66,11 +66,6 @@ const Gallery = () => {
           }}
           className="h-full w-full"
           onSwiper={(swiper) => { mainSwiperRef.current = swiper; }}
-          onSlideChange={(swiper) => {
-            if (thumbsSwiper && thumbsSwiper.slideTo) {
-              thumbsSwiper.slideTo(swiper.realIndex, 300, true);
-            }
-          }}
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
@@ -111,21 +106,29 @@ const Gallery = () => {
             onSwiper={setThumbsSwiper}
             slidesPerView="auto"
             spaceBetween={12}
-            watchSlidesProgress
-            loop={false}
+            loop={true}
             centeredSlides={true}
             slideToClickedSlide={true}
             className="!h-24"
           >
             {images.map((image, idx) => (
               <SwiperSlide key={idx} className="!w-24 !h-24">
-                <div className="w-24 h-24 overflow-hidden border-2 border-transparent rounded-lg shadow transition-all duration-200">
+                <div className="w-24 h-24 overflow-hidden rounded-lg shadow transition-all duration-200">
                   <Image
                     src={image.src}
                     alt={image.alt}
                     width={96}
                     height={96}
-                    className="object-cover opacity-50 rounded-lg"
+                    className={
+                      "object-cover rounded-lg transition-all duration-200 " +
+                      (thumbsSwiper && thumbsSwiper.activeIndex === idx
+                        ? "opacity-100 contrast-125"
+                        : "opacity-50")
+                    }
+                    style={{
+                      opacity: thumbsSwiper && thumbsSwiper.activeIndex === idx ? 1 : 0.5,
+                      filter: thumbsSwiper && thumbsSwiper.activeIndex === idx ? 'contrast(1.25)' : 'none'
+                    }}
                   />
                 </div>
               </SwiperSlide>
