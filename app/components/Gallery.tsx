@@ -15,20 +15,28 @@ import 'swiper/css/thumbs';
 
 const images = [
   {
-    src: '/images/gallery1.jpg',
+    src: '/images/gallery1.png',
     alt: '첫 번째 사진'
   },
   {
-    src: '/images/gallery2.jpg',
+    src: '/images/gallery2.png',
     alt: '두 번째 사진'
   },
   {
-    src: '/images/gallery3.jpg',
+    src: '/images/gallery3.png',
     alt: '세 번째 사진'
   },
   {
-    src: '/images/gallery4.jpg',
+    src: '/images/gallery4.png',
     alt: '네 번째 사진'
+  },
+  {
+    src: '/images/gallery5.png',
+    alt: '다섯 번째 사진'
+  },
+  {
+    src: '/images/gallery6.png',
+    alt: '여섯 번째 사진'
   }
 ];
 
@@ -106,7 +114,7 @@ const Gallery = () => {
                     alt={image.alt}
                     width={96}
                     height={96}
-                    className="object-cover"
+                    className="object-cover opacity-50 bg-white"
                   />
                 </div>
               </SwiperSlide>

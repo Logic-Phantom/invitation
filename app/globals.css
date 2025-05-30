@@ -189,6 +189,10 @@
   transform: scale(1);
 }
 
+.swiper-slide-thumb-active img {
+  opacity: 1 !important;
+}
+
 .swiper-slide {
   opacity: 0.5;
 }
