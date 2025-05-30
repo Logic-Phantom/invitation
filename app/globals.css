@@ -66,9 +66,9 @@
 
 .swiper-button-next,
 .swiper-button-prev {
-  width: 40px !important;
-  height: 40px !important;
-  background: rgba(255, 255, 255, 0.9) !important;
+  width: 32px !important;
+  height: 32px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
   border-radius: 50%;
   transition: all 0.3s ease;
   display: flex !important;
@@ -80,8 +80,8 @@
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  background: white !important;
-  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.85) !important;
+  transform: scale(1.05);
 }
 
 .swiper-button-next:after,

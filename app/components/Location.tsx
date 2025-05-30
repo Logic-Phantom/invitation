@@ -14,7 +14,7 @@ const Location = () => {
   const [map, setMap] = useState<any>(null);
   const [marker, setMarker] = useState<any>(null);
   const [infowindow, setInfowindow] = useState<any>(null);
-  const [selectedRouteType, setSelectedRouteType] = useState<'walk' | 'bus' | 'car'>('walk');
+  const [selectedRouteType, setSelectedRouteType] = useState<'bus' | 'car'>('bus');
   const [isMapLoaded, setIsMapLoaded] = useState(false);
   const [currentPolyline, setCurrentPolyline] = useState<any>(null);
 
@@ -143,8 +143,7 @@ const Location = () => {
           currentPolyline.setMap(null);
         }
 
-        const routeType = selectedRouteType === 'walk' ? 'walk' : 
-                        selectedRouteType === 'bus' ? 'transit' : 'car';
+        const routeType = selectedRouteType === 'bus' ? 'transit' : 'car';
         const url = `https://map.kakao.com/link/to/경복궁,${endLat},${endLng}?mode=${routeType}&from=${startLat},${startLng}`;
         window.open(url, '_blank');
 
@@ -168,7 +167,7 @@ const Location = () => {
           <div style="padding:10px;width:200px;text-align:center;">
             <strong>경로 안내${isDefaultLocation ? ' (기본 위치)' : ''}</strong><br>
             ${isDefaultLocation ? '서울역에서 경복궁까지<br>' : ''}
-            ${selectedRouteType === 'walk' ? '도보' : selectedRouteType === 'bus' ? '대중교통' : '차량'} 경로
+            ${selectedRouteType === 'bus' ? '대중교통' : '차량'} 경로
           </div>
         `;
         const routeInfowindow = new window.kakao.maps.InfoWindow({
@@ -259,18 +258,16 @@ const Location = () => {
           <span className="text-gray-600">서울특별시 종로구 사직로 161</span>
         </div>
 
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <h4 className="font-medium text-gray-900 mb-2">주차 안내</h4>
+          <p className="text-gray-600 text-sm">
+            • 웨딩홀 지하 주차장 이용 가능 (3시간 무료)<br />
+            • 주차 공간이 제한적이오니 가급적 대중교통 이용을 부탁드립니다.<br />
+            • 주차장 입구는 건물 정면에서 우측으로 50m 지점에 있습니다.
+          </p>
+        </div>
+
         <div className="flex flex-wrap gap-4">
-          <button
-            onClick={() => setSelectedRouteType('walk')}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-full border ${
-              selectedRouteType === 'walk'
-                ? 'bg-gray-900 text-white border-gray-900'
-                : 'bg-white text-gray-900 border-gray-300 hover:bg-gray-50'
-            }`}
-          >
-            <FaWalking />
-            <span>도보</span>
-          </button>
           <button
             onClick={() => setSelectedRouteType('bus')}
             className={`flex items-center space-x-2 px-4 py-2 rounded-full border ${

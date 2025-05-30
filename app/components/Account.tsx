@@ -51,72 +51,84 @@ const Account = () => {
                 <>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="font-medium text-gray-900">{GROOM_NAME}</p>
-                    <p className="text-gray-600 mt-1">{GROOM_ACCOUNT_NUMBER}</p>
-                    <button 
-                      onClick={() => copyToClipboard(GROOM_ACCOUNT_NUMBER)}
-                      className="mt-2 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-                    >
-                      <FaCopy />
-                      <span>복사하기</span>
-                    </button>
+                    <div className="flex items-center justify-between mt-1">
+                      <p className="text-gray-600">{GROOM_ACCOUNT_NUMBER}</p>
+                      <button 
+                        onClick={() => copyToClipboard(GROOM_ACCOUNT_NUMBER)}
+                        className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        <FaCopy />
+                        <span>복사하기</span>
+                      </button>
+                    </div>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="font-medium text-gray-900">{GROOM_FATHER_NAME}</p>
-                    <p className="text-gray-600 mt-1">{GROOM_FATHER_ACCOUNT_NUMBER}</p>
-                    <button 
-                      onClick={() => copyToClipboard(GROOM_FATHER_ACCOUNT_NUMBER)}
-                      className="mt-2 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-                    >
-                      <FaCopy />
-                      <span>복사하기</span>
-                    </button>
+                    <div className="flex items-center justify-between mt-1">
+                      <p className="text-gray-600">{GROOM_FATHER_ACCOUNT_NUMBER}</p>
+                      <button 
+                        onClick={() => copyToClipboard(GROOM_FATHER_ACCOUNT_NUMBER)}
+                        className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        <FaCopy />
+                        <span>복사하기</span>
+                      </button>
+                    </div>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="font-medium text-gray-900">{GROOM_MOTHER_NAME}</p>
-                    <p className="text-gray-600 mt-1">{GROOM_MOTHER_ACCOUNT_NUMBER}</p>
-                    <button 
-                      onClick={() => copyToClipboard(GROOM_MOTHER_ACCOUNT_NUMBER)}
-                      className="mt-2 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-                    >
-                      <FaCopy />
-                      <span>복사하기</span>
-                    </button>
+                    <div className="flex items-center justify-between mt-1">
+                      <p className="text-gray-600">{GROOM_MOTHER_ACCOUNT_NUMBER}</p>
+                      <button 
+                        onClick={() => copyToClipboard(GROOM_MOTHER_ACCOUNT_NUMBER)}
+                        className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        <FaCopy />
+                        <span>복사하기</span>
+                      </button>
+                    </div>
                   </div>
                 </>
               ) : (
                 <>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="font-medium text-gray-900">{BRIDE_NAME}</p>
-                    <p className="text-gray-600 mt-1">{BRIDE_ACCOUNT_NUMBER}</p>
-                    <button 
-                      onClick={() => copyToClipboard(BRIDE_ACCOUNT_NUMBER)}
-                      className="mt-2 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-                    >
-                      <FaCopy />
-                      <span>복사하기</span>
-                    </button>
+                    <div className="flex items-center justify-between mt-1">
+                      <p className="text-gray-600">{BRIDE_ACCOUNT_NUMBER}</p>
+                      <button 
+                        onClick={() => copyToClipboard(BRIDE_ACCOUNT_NUMBER)}
+                        className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        <FaCopy />
+                        <span>복사하기</span>
+                      </button>
+                    </div>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="font-medium text-gray-900">{BRIDE_FATHER_NAME}</p>
-                    <p className="text-gray-600 mt-1">{BRIDE_FATHER_ACCOUNT_NUMBER}</p>
-                    <button 
-                      onClick={() => copyToClipboard(BRIDE_FATHER_ACCOUNT_NUMBER)}
-                      className="mt-2 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-                    >
-                      <FaCopy />
-                      <span>복사하기</span>
-                    </button>
+                    <div className="flex items-center justify-between mt-1">
+                      <p className="text-gray-600">{BRIDE_FATHER_ACCOUNT_NUMBER}</p>
+                      <button 
+                        onClick={() => copyToClipboard(BRIDE_FATHER_ACCOUNT_NUMBER)}
+                        className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        <FaCopy />
+                        <span>복사하기</span>
+                      </button>
+                    </div>
                   </div>
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="font-medium text-gray-900">{BRIDE_MOTHER_NAME}</p>
-                    <p className="text-gray-600 mt-1">{BRIDE_MOTHER_ACCOUNT_NUMBER}</p>
-                    <button 
-                      onClick={() => copyToClipboard(BRIDE_MOTHER_ACCOUNT_NUMBER)}
-                      className="mt-2 flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
-                    >
-                      <FaCopy />
-                      <span>복사하기</span>
-                    </button>
+                    <div className="flex items-center justify-between mt-1">
+                      <p className="text-gray-600">{BRIDE_MOTHER_ACCOUNT_NUMBER}</p>
+                      <button 
+                        onClick={() => copyToClipboard(BRIDE_MOTHER_ACCOUNT_NUMBER)}
+                        className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                      >
+                        <FaCopy />
+                        <span>복사하기</span>
+                      </button>
+                    </div>
                   </div>
                 </>
               )}

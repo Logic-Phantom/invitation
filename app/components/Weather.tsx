@@ -86,16 +86,16 @@ const Weather = () => {
     
     // 요일 헤더
     calendar.push(
-      <div key="header" className="grid grid-cols-7 gap-px mb-2 bg-gradient-to-r from-gray-50 to-gray-100 rounded-t-lg overflow-hidden">
+      <div key="header" className="grid grid-cols-7 gap-2 mb-4">
         {days.map((day, index) => (
           <div 
             key={day} 
-            className={`text-center py-3 text-sm font-medium ${
+            className={`text-center py-2 text-sm font-medium ${
               index === 0 
-                ? 'text-red-500 bg-red-50/50' 
+                ? 'text-red-500' 
                 : index === 6 
-                ? 'text-blue-500 bg-blue-50/50' 
-                : 'text-gray-600 bg-white/80'
+                ? 'text-blue-500' 
+                : 'text-gray-600'
             }`}
           >
             {day}
@@ -107,7 +107,6 @@ const Weather = () => {
     // 날짜 그리드
     let date = 1;
     const rows = [];
-    let isLastRowEmpty = true;
     
     for (let i = 0; i < 5; i++) {
       const cells = [];
@@ -118,14 +117,14 @@ const Weather = () => {
           cells.push(
             <div 
               key={`empty-${j}`} 
-              className="h-14 bg-white/50 border border-gray-100/50"
+              className="h-14"
             ></div>
           );
         } else if (date > lastDate) {
           cells.push(
             <div 
               key={`empty-end-${j}`} 
-              className="h-14 bg-white/50 border border-gray-100/50"
+              className="h-14"
             ></div>
           );
         } else {
@@ -134,21 +133,21 @@ const Weather = () => {
           cells.push(
             <div
               key={date}
-              className={`h-14 flex items-center justify-center text-sm border border-gray-100/50 transition-all duration-200 hover:shadow-md ${
+              className={`h-14 flex items-center justify-center text-sm transition-all duration-300 ${
                 isWeddingDay
-                  ? 'bg-gradient-to-br from-pink-50 to-pink-100/50 text-pink-600 font-bold relative group'
+                  ? 'relative group'
                   : j === 0
-                  ? 'text-red-500 bg-red-50/30 hover:bg-red-50/50'
+                  ? 'text-red-500'
                   : j === 6
-                  ? 'text-blue-500 bg-blue-50/30 hover:bg-blue-50/50'
-                  : 'text-gray-600 bg-white/80 hover:bg-gray-50'
+                  ? 'text-blue-500'
+                  : 'text-gray-600'
               }`}
             >
               {date}
               {isWeddingDay && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-10 h-10 rounded-full border-2 border-pink-400/80 flex items-center justify-center shadow-lg shadow-pink-200/50 transform transition-transform duration-300 group-hover:scale-110">
-                    <span className="relative z-10">{date}</span>
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-200/50 transform transition-transform duration-300 group-hover:scale-110">
+                    <span className="relative z-10 text-white font-medium">{date}</span>
                   </div>
                 </div>
               )}
@@ -160,7 +159,7 @@ const Weather = () => {
       
       if (hasDate) {
         rows.push(
-          <div key={i} className="grid grid-cols-7 gap-px">
+          <div key={i} className="grid grid-cols-7 gap-2">
             {cells}
           </div>
         );
@@ -203,10 +202,8 @@ const Weather = () => {
         transition={{ duration: 0.5 }}
         className="bg-white rounded-lg p-6 shadow-sm"
       >
-        <div className="text-center mb-6">
-          <p className="text-sm text-gray-500 mt-1">웨딩데이</p>
-        </div>
-        <div className="calendar border border-gray-200/80 rounded-lg overflow-hidden shadow-lg shadow-gray-100/50 backdrop-blur-sm">
+        <h2 className="section-title">웨딩데이</h2>
+        <div className="calendar p-4 bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-2xl">
           {generateCalendar()}
         </div>
       </motion.div>
