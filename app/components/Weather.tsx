@@ -86,16 +86,12 @@ const Weather = () => {
     
     // 요일 헤더
     calendar.push(
-      <div key="header" className="grid grid-cols-7 gap-2 mb-4">
+      <div key="header" className="grid grid-cols-7 gap-3 mb-2">
         {days.map((day, index) => (
-          <div 
-            key={day} 
-            className={`text-center py-2 text-xs font-medium ${
-              index === 0 
-                ? 'text-rose-400' 
-                : index === 6 
-                ? 'text-sky-400' 
-                : 'text-gray-500'
+          <div
+            key={day}
+            className={`w-8 h-8 flex items-center justify-center text-xs font-medium ${
+              index === 0 ? 'text-rose-400' : index === 6 ? 'text-sky-400' : 'text-gray-500'
             }`}
           >
             {day}
@@ -159,7 +155,7 @@ const Weather = () => {
       
       if (hasDate) {
         rows.push(
-          <div key={i} className="grid grid-cols-7 gap-2">
+          <div key={i} className="grid grid-cols-7 gap-3">
             {cells}
           </div>
         );
