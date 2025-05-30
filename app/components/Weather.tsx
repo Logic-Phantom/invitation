@@ -90,12 +90,12 @@ const Weather = () => {
         {days.map((day, index) => (
           <div 
             key={day} 
-            className={`text-center py-2 text-sm font-medium ${
+            className={`text-center py-2 text-xs font-medium ${
               index === 0 
-                ? 'text-red-500' 
+                ? 'text-rose-400' 
                 : index === 6 
-                ? 'text-blue-500' 
-                : 'text-gray-600'
+                ? 'text-sky-400' 
+                : 'text-gray-500'
             }`}
           >
             {day}
@@ -117,14 +117,14 @@ const Weather = () => {
           cells.push(
             <div 
               key={`empty-${j}`} 
-              className="h-14"
+              className="h-12 border border-gray-100 rounded-lg"
             ></div>
           );
         } else if (date > lastDate) {
           cells.push(
             <div 
               key={`empty-end-${j}`} 
-              className="h-14"
+              className="h-12 border border-gray-100 rounded-lg"
             ></div>
           );
         } else {
@@ -133,20 +133,20 @@ const Weather = () => {
           cells.push(
             <div
               key={date}
-              className={`h-14 flex items-center justify-center text-sm transition-all duration-300 ${
+              className={`h-12 flex items-center justify-center text-sm transition-all duration-300 border border-gray-100 rounded-lg ${
                 isWeddingDay
                   ? 'relative group'
                   : j === 0
-                  ? 'text-red-500'
+                  ? 'text-rose-400'
                   : j === 6
-                  ? 'text-blue-500'
+                  ? 'text-sky-400'
                   : 'text-gray-600'
               }`}
             >
               {date}
               {isWeddingDay && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-200/50 transform transition-transform duration-300 group-hover:scale-110">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center shadow-lg shadow-pink-200/50 transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-pink-300/50">
                     <span className="relative z-10 text-white font-medium">{date}</span>
                   </div>
                 </div>
@@ -173,7 +173,7 @@ const Weather = () => {
   return (
     <div className="space-y-4">
       {/* 날씨 정보 섹션 */}
-      <div className="bg-white rounded-lg p-6 shadow-sm">
+      <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
         {loading ? (
           <div className="text-center text-gray-500">날씨 정보를 불러오는 중...</div>
         ) : error ? (
@@ -200,10 +200,10 @@ const Weather = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white rounded-lg p-6 shadow-sm"
+        className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
       >
-        <h2 className="section-title">웨딩데이</h2>
-        <div className="calendar p-4 bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-2xl">
+        <h2 className="section-title mb-4">웨딩데이</h2>
+        <div className="calendar p-4 bg-white rounded-xl border border-gray-100">
           {generateCalendar()}
         </div>
       </motion.div>
