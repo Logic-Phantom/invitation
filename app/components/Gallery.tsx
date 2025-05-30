@@ -1,55 +1,54 @@
 'use client';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectFade, Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { EffectFade, Navigation, Thumbs, Autoplay } from 'swiper/modules';
 import Image from 'next/image';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useState } from 'react';
 
 // Swiper 스타일 import
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/thumbs';
 
 const images = [
   {
     src: '/images/gallery1.jpg',
-    alt: '첫 번째 사진',
-    description: '우리의 첫 만남'
+    alt: '첫 번째 사진'
   },
   {
     src: '/images/gallery2.jpg',
-    alt: '두 번째 사진',
-    description: '함께한 시간들'
+    alt: '두 번째 사진'
   },
   {
     src: '/images/gallery3.jpg',
-    alt: '세 번째 사진',
-    description: '소중한 순간들'
+    alt: '세 번째 사진'
   },
   {
     src: '/images/gallery4.jpg',
-    alt: '네 번째 사진',
-    description: '영원한 사랑'
+    alt: '네 번째 사진'
   }
 ];
 
 const Gallery = () => {
+  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   return (
     <div className="w-full">
       <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden">
+        {/* 메인 Swiper */}
         <Swiper
-          modules={[EffectFade, Navigation, Pagination, Autoplay]}
+          modules={[EffectFade, Navigation, Thumbs, Autoplay]}
           effect="fade"
           speed={1000}
           spaceBetween={0}
           slidesPerView={1}
-          loop={true}
           navigation={{
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
           }}
-          pagination={{ clickable: true }}
+          thumbs={{ swiper: thumbsSwiper }}
           autoplay={{
             delay: 3000,
             disableOnInteraction: false,
@@ -69,9 +68,6 @@ const Gallery = () => {
                   priority={index === 0}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <h3 className="text-2xl font-medium mb-2">{image.description}</h3>
-                </div>
               </div>
             </SwiperSlide>
           ))}
@@ -90,10 +86,32 @@ const Gallery = () => {
             </svg>
           </button>
         </div>
-
-        {/* 페이지네이션 */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10">
-          <div className="swiper-pagination !bottom-0" />
+      </div>
+      {/* 썸네일 Swiper를 메인 Swiper 바깥에 분리하여 배치 */}
+      <div className="w-full flex justify-center mt-4 overflow-x-auto">
+        <div className="max-w-full w-full">
+          <Swiper
+            modules={[Thumbs]}
+            onSwiper={setThumbsSwiper}
+            slidesPerView="auto"
+            spaceBetween={12}
+            watchSlidesProgress
+            className="!h-24"
+          >
+            {images.map((image, idx) => (
+              <SwiperSlide key={idx} className="!w-24 !h-24 bg-white">
+                <div className="w-24 h-24 overflow-hidden border-2 border-transparent transition-all duration-200">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={96}
+                    height={96}
+                    className="object-cover"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </div>

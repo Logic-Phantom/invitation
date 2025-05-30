@@ -55,7 +55,7 @@
   justify-content: center;
   align-items: center;
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
+  opacity: 0.5;
   transform: scale(0.95);
 }
 
@@ -180,4 +180,24 @@
   width: 22px;
   height: 12px;
   background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+}
+
+/* 썸네일 Swiper에서 여러 썸네일이 보이도록 */
+.swiper-slide-thumb-active,
+.swiper-slide-visible {
+  opacity: 1 !important;
+  transform: scale(1);
+}
+
+.swiper-slide {
+  opacity: 0.5;
+}
+
+/* 썸네일 Swiper 스크롤바 숨기기 */
+.w-full.flex.justify-center.mt-4.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+.w-full.flex.justify-center.mt-4.overflow-x-auto {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 } 
