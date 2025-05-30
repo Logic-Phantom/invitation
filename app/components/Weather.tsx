@@ -86,11 +86,11 @@ const Weather = () => {
     
     // 요일 헤더
     calendar.push(
-      <div key="header" className="grid grid-cols-7 gap-3 mb-2">
+      <div key="header" className="grid grid-cols-7 gap-1 mb-1">
         {days.map((day, index) => (
           <div
             key={day}
-            className={`w-8 h-8 flex items-center justify-center text-xs font-medium ${
+            className={`w-full aspect-square flex items-center justify-center text-[11px] font-medium ${
               index === 0 ? 'text-rose-400' : index === 6 ? 'text-sky-400' : 'text-gray-500'
             }`}
           >
@@ -113,14 +113,14 @@ const Weather = () => {
           cells.push(
             <div 
               key={`empty-${j}`} 
-              className="h-12 border border-gray-100 rounded-lg"
+              className="aspect-square border border-gray-100 rounded-lg"
             ></div>
           );
         } else if (date > lastDate) {
           cells.push(
             <div 
               key={`empty-end-${j}`} 
-              className="h-12 border border-gray-100 rounded-lg"
+              className="aspect-square border border-gray-100 rounded-lg"
             ></div>
           );
         } else {
@@ -129,7 +129,7 @@ const Weather = () => {
           cells.push(
             <div
               key={date}
-              className={`h-12 flex items-center justify-center text-sm transition-all duration-300 border border-gray-100 rounded-lg ${
+              className={`aspect-square flex items-center justify-center text-xs transition-all duration-300 border border-gray-100 rounded-lg ${
                 isWeddingDay
                   ? 'relative group'
                   : j === 0
@@ -142,7 +142,7 @@ const Weather = () => {
               {date}
               {isWeddingDay && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center shadow-lg shadow-pink-200/50 transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-pink-300/50">
+                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-pink-400 to-rose-400 flex items-center justify-center shadow-lg shadow-pink-200/50 transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-pink-300/50">
                     <span className="relative z-10 text-white font-medium">{date}</span>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ const Weather = () => {
       
       if (hasDate) {
         rows.push(
-          <div key={i} className="grid grid-cols-7 gap-3">
+          <div key={i} className="grid grid-cols-7 gap-1">
             {cells}
           </div>
         );
@@ -199,7 +199,7 @@ const Weather = () => {
         className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
       >
         <h2 className="section-title mb-4">2026년 6월</h2>
-        <div className="calendar p-4 bg-white rounded-xl border border-gray-100">
+        <div className="calendar p-4 bg-white rounded-xl border border-gray-100 space-y-2">
           {generateCalendar()}
         </div>
       </motion.div>
