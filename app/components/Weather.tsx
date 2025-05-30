@@ -202,8 +202,7 @@ const Weather = () => {
         transition={{ duration: 0.5 }}
         className="bg-white rounded-xl p-6 shadow-sm border border-gray-100"
       >
-        <h2 className="section-title mb-4">웨딩데이</h2>
-        <p className="text-center text-gray-600 mb-4 text-sm">2026년 6월</p>
+        <h2 className="section-title mb-4">2026년 6월</h2>
         <div className="calendar p-4 bg-white rounded-xl border border-gray-100">
           {generateCalendar()}
         </div>

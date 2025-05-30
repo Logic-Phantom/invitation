@@ -102,12 +102,11 @@ export default function Home() {
             <div className="text-gray-600 text-xl">
               {elapsedTime}
             </div>
-            <div className="mt-6 text-sm md:text-base text-gray-500 max-w-md mx-auto leading-relaxed">
-              저희의 결혼 소식이 부담스럽지 않게 다가가길 바라며,<br />
-              편한 마음으로 오셔서 축하해주시면 감사하겠습니다.
-            </div>
           </div>
         </motion.section>
+
+        {/* 초대합니다 섹션 */}
+        <Invitation />
 
         {/* 갤러리 섹션 */}
         <motion.section
