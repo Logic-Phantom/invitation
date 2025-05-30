@@ -173,10 +173,6 @@ const Header = () => {
           className="text-center mb-16"
         >
           <h1 className="text-2xl md:text-3xl font-serif mb-4 text-white">저희 결혼합니다</h1>
-          <p className="text-sm md:text-base text-white max-w-md mx-auto">
-            저희의 결혼 소식이 부담스럽지 않게 다가가길 바라며,<br />
-            편한 마음으로 오셔서 축하해주시면 감사하겠습니다.
-          </p>
         </motion.div>
 
         <motion.div
