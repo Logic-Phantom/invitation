@@ -143,9 +143,18 @@ const Location = () => {
           currentPolyline.setMap(null);
         }
 
-        const routeType = selectedRouteType === 'bus' ? 'transit' : 'car';
-        const url = `https://map.kakao.com/link/to/경복궁,${endLat},${endLng}?mode=${routeType}&from=${startLat},${startLng}`;
-        window.open(url, '_blank');
+        let url = '';
+
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          url = `kakaomap://route?sp=${startLat},${startLng}&ep=${endLat},${endLng}&by=${selectedRouteType === 'bus' ? 'PUBLICTRANSIT' : 'CAR'}`;
+        } else if (/Android/i.test(navigator.userAgent)) {
+          url = `intent://route?sp=${startLat},${startLng}&ep=${endLat},${endLng}&by=${selectedRouteType === 'bus' ? 'PUBLICTRANSIT' : 'CAR'}#Intent;scheme=kakaomap;package=net.daum.android.map;end`;
+        } else {
+          alert('모바일 기기에서만 길찾기 기능을 지원합니다.');
+          return;
+        }
+
+        window.location.href = url;
 
         const polyline = new window.kakao.maps.Polyline({
           path: [startPos, endPos],
