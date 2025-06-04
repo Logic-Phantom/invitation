@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaMapMarkerAlt, FaWalking, FaBus, FaCar } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaWalking, FaBus, FaCar, FaMap } from 'react-icons/fa';
 
 declare global {
   interface Window {
@@ -255,6 +255,144 @@ const Location = () => {
     checkAndRequestLocation();
   };
 
+  const showTmapRoute = () => {
+    if (!map || !marker) {
+      console.error('Map or marker not initialized');
+      alert('지도가 아직 로드되지 않았습니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname.startsWith('192.168.');
+    const isSecure = window.location.protocol === 'https:';
+
+    if (!isLocalhost && !isSecure) {
+      alert('보안 연결(HTTPS)이 필요합니다.');
+      return;
+    }
+
+    const showRouteWithPosition = (startLat: number, startLng: number, isDefaultLocation: boolean = false) => {
+      try {
+        const endLat = 37.579617;
+        const endLng = 126.977041;
+
+        const startPos = new window.kakao.maps.LatLng(startLat, startLng);
+        const endPos = new window.kakao.maps.LatLng(endLat, endLng);
+
+        if (currentPolyline) {
+          currentPolyline.setMap(null);
+        }
+
+        let url = '';
+
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          url = `tmap://route?startname=현재위치&startx=${startLng}&starty=${startLat}&goalname=경복궁&goalx=${endLng}&goaly=${endLat}&pathType=${selectedRouteType === 'bus' ? '1' : '0'}`;
+        } else if (/Android/i.test(navigator.userAgent)) {
+          url = `intent://route?startname=현재위치&startx=${startLng}&starty=${startLat}&goalname=경복궁&goalx=${endLng}&goaly=${endLat}&pathType=${selectedRouteType === 'bus' ? '1' : '0'}#Intent;scheme=tmap;package=com.skt.tmap.ku;end`;
+        } else {
+          alert('모바일 기기에서만 길찾기 기능을 지원합니다.');
+          return;
+        }
+
+        window.location.href = url;
+
+        const polyline = new window.kakao.maps.Polyline({
+          path: [startPos, endPos],
+          strokeWeight: 5,
+          strokeColor: '#333333',
+          strokeOpacity: 0.7,
+          strokeStyle: 'solid'
+        });
+
+        polyline.setMap(map);
+        setCurrentPolyline(polyline);
+
+        const bounds = new window.kakao.maps.LatLngBounds();
+        bounds.extend(startPos);
+        bounds.extend(endPos);
+        map.setBounds(bounds);
+
+        const iwContent = `
+          <div style="padding:10px;width:200px;text-align:center;">
+            <strong>티맵 경로 안내${isDefaultLocation ? ' (기본 위치)' : ''}</strong><br>
+            ${isDefaultLocation ? '서울역에서 경복궁까지<br>' : ''}
+            ${selectedRouteType === 'bus' ? '대중교통' : '차량'} 경로
+          </div>
+        `;
+        const routeInfowindow = new window.kakao.maps.InfoWindow({
+          content: iwContent,
+          position: startPos
+        });
+        routeInfowindow.open(map);
+      } catch (error) {
+        console.error('Error showing route:', error);
+        alert('경로 표시 중 오류가 발생했습니다. 다시 시도해주세요.');
+      }
+    };
+
+    const checkAndRequestLocation = () => {
+      if (navigator.geolocation) {
+        const options = {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 30000
+        };
+
+        if (navigator.permissions && navigator.permissions.query) {
+          navigator.permissions.query({ name: 'geolocation' }).then((permissionStatus) => {
+            if (permissionStatus.state === 'denied') {
+              alert('위치 정보 접근이 거부되어 있습니다. 브라우저 설정에서 위치 정보 접근을 허용해주세요.');
+              return;
+            }
+            requestLocation();
+          });
+        } else {
+          requestLocation();
+        }
+      } else {
+        alert('이 브라우저에서는 위치 정보를 사용할 수 없습니다.');
+      }
+    };
+
+    const requestLocation = () => {
+      const options = {
+        enableHighAccuracy: false,
+        timeout: 10000,
+        maximumAge: 30000
+      };
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const startLat = position.coords.latitude;
+          const startLng = position.coords.longitude;
+          showRouteWithPosition(startLat, startLng);
+        },
+        (error) => {
+          console.error('Error getting current position:', error);
+          
+          let errorMessage = '현재 위치를 가져오는데 실패했습니다.';
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage = '위치 정보 접근 권한이 거부되었습니다.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage = '위치 정보를 사용할 수 없습니다.';
+              break;
+            case error.TIMEOUT:
+              errorMessage = '위치 정보 요청 시간이 초과되었습니다.';
+              break;
+          }
+
+          alert(errorMessage);
+        },
+        options
+      );
+    };
+
+    checkAndRequestLocation();
+  };
+
   return (
     <div className="space-y-6">
       <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
@@ -301,12 +439,20 @@ const Location = () => {
           </button>
         </div>
 
-        <button
-          onClick={showRoute}
-          className="w-full py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors"
-        >
-          길찾기
-        </button>
+        <div className="flex flex-col gap-2">
+          <button
+            onClick={showRoute}
+            className="w-full py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors"
+          >
+            카카오맵 길찾기
+          </button>
+          <button
+            onClick={showTmapRoute}
+            className="w-full py-3 bg-[#00BFFF] text-white rounded-full hover:bg-[#0099CC] transition-colors"
+          >
+            티맵 길찾기
+          </button>
+        </div>
       </div>
     </div>
   );
