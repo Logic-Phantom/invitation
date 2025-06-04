@@ -99,8 +99,8 @@ const Gallery = () => {
         </div>
       </div>
       {/* 썸네일 Swiper를 메인 Swiper 바깥에 분리하여 배치 */}
-      <div className="w-full flex justify-center mt-4 overflow-x-auto">
-        <div className="max-w-full w-full bg-[#f8faff] rounded-xl py-4 px-2 shadow-sm">
+      <div className="w-full flex justify-center mt-4">
+        <div className="w-full max-w-[320px] bg-[#f8faff] rounded-xl py-4 px-2 shadow-sm">
           <Swiper
             modules={[Thumbs]}
             onSwiper={setThumbsSwiper}
@@ -109,6 +109,20 @@ const Gallery = () => {
             loop={true}
             centeredSlides={true}
             slideToClickedSlide={true}
+            breakpoints={{
+              0: {
+                slidesPerView: "auto",
+                spaceBetween: 12,
+                loop: true,
+                centeredSlides: true
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 8,
+                loop: true,
+                centeredSlides: true
+              }
+            }}
             className="!h-24"
           >
             {images.map((image, idx) => (
