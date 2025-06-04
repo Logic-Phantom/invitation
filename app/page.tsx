@@ -77,14 +77,14 @@ export default function Home() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <div className="grid grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <p className="text-gray-600">임영택 · 김정혜의 차남</p>
-              <h3 className="text-xl font-serif">신랑 임채명</h3>
+          <div className="grid grid-cols-2 gap-4 md:gap-8">
+            <div className="space-y-2 md:space-y-4">
+              <p className="text-gray-600 whitespace-nowrap text-sm md:text-base">임영택 · 김정혜의 차남</p>
+              <h3 className="text-lg md:text-xl font-serif">신랑 임채명</h3>
             </div>
-            <div className="space-y-4">
-              <p className="text-gray-600">김경복 · 박향미의 차녀</p>
-              <h3 className="text-xl font-serif">신부 김서현</h3>
+            <div className="space-y-2 md:space-y-4">
+              <p className="text-gray-600 whitespace-nowrap text-sm md:text-base">김경복 · 박향미의 차녀</p>
+              <h3 className="text-lg md:text-xl font-serif">신부 김서현</h3>
             </div>
           </div>
         </motion.section>
