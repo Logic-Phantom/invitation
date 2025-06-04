@@ -35,8 +35,19 @@ const Account = () => {
       </div>
 
       {open && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm relative animate-fade-in">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+        >
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.2 }}
+            className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm relative"
+          >
             <button 
               onClick={() => setOpen(false)} 
               className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl"
@@ -133,8 +144,8 @@ const Account = () => {
                 </>
               )}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
     </div>
   );
