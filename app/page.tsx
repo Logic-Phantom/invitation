@@ -164,10 +164,17 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
+          className="mb-16"
         >
-          <h2 className="section-title mb-2">공유하기</h2>
+          <h2 className="section-title mb-6">공유하기</h2>
+          <p className="text-center text-gray-500 text-sm mb-4">
+            소중한 분들과 함께 나누고 싶은<br />
+            저희의 특별한 순간입니다
+          </p>
           <Share />
         </motion.section>
+
+
       </motion.div>
     </main>
   );
