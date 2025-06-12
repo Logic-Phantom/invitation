@@ -151,6 +151,10 @@ export default function Home() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="section-title">마음 전하실 곳</h2>
+          <p className="text-center text-gray-500 text-sm mb-8">
+            축하의 마음을 전하실 수 있도록<br />
+            감사한 마음으로 받겠습니다
+          </p>
           <Account />
         </motion.section>
 
