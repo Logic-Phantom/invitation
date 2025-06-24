@@ -67,17 +67,22 @@ export async function GET() {
     const nx = 60;  // 경복궁 격자 X 좌표
     const ny = 127; // 경복궁 격자 Y 좌표
     
-    // 현재 날짜와  시간
+    // 한국 서울 시간 기준으로 현재 날짜와 시간 계산
     const now = new Date();
-    let base_date = now.toISOString().slice(0, 10).replace(/-/g, '');
+    // 한국 시간대 (KST, UTC+9) 계산
+    const koreaTimeOffset = 9 * 60; // 9시간을 분으로
+    const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const koreaTime = new Date(utc + (koreaTimeOffset * 60000));
+    
+    let base_date = koreaTime.toISOString().slice(0, 10).replace(/-/g, '');
     
     // 기상청 API 시간 기준 (매시 45분 이후에 발표)
     // 02:00, 05:00, 08:00, 11:00, 14:00, 17:00, 20:00, 23:00
-    const hour = now.getHours();
+    const hour = koreaTime.getHours();
     let base_time;
     if (hour < 2) {
       base_time = '2300'; // 전날 23시
-      const yesterday = new Date(now);
+      const yesterday = new Date(koreaTime);
       yesterday.setDate(yesterday.getDate() - 1);
       base_date = yesterday.toISOString().slice(0, 10).replace(/-/g, '');
     } else if (hour < 5) {
@@ -98,7 +103,9 @@ export async function GET() {
       base_time = '2300';
     }
 
-    console.log('Current time:', now.toISOString());
+    console.log('Current UTC time:', now.toISOString());
+    console.log('Current Korea time:', koreaTime.toISOString());
+    console.log('Korea time (local):', koreaTime.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }));
     console.log('Using base_date:', base_date, 'base_time:', base_time);
 
     // API 키를 직접 사용 (디코딩하지 않음)
@@ -186,6 +193,27 @@ export async function GET() {
     }
 
     const data = await response.json();
+    
+    // Vercel vs 로컬 환경 비교 로깅
+    console.log('=== API Response Analysis ===');
+    console.log('Environment:', process.env.VERCEL_ENV || 'local');
+    console.log('Response data keys:', Object.keys(data));
+    console.log('Response header:', data.response?.header);
+    console.log('Items count:', data.response?.body?.items?.item?.length || 0);
+    console.log('First item sample:', data.response?.body?.items?.item?.[0]);
+    
+    // 온도 데이터 찾기
+    const tempData = data.response?.body?.items?.item?.find((item: any) => item.category === 'TMP');
+    if (tempData) {
+      console.log('Temperature data found:', {
+        date: tempData.fcstDate,
+        time: tempData.fcstTime,
+        temperature: tempData.fcstValue,
+        baseDate: tempData.baseDate,
+        baseTime: tempData.baseTime
+      });
+    }
+    
     return NextResponse.json(data);
   } catch (error) {
     console.error('Weather API Error:', error);
