@@ -52,6 +52,12 @@ export async function GET() {
     // URL 인코딩된 API 키 디코딩
     const decodedApiKey = decodeURIComponent(process.env.KMA_API_KEY);
     console.log('Decoded API key length:', decodedApiKey.length);
+    console.log('API Key format check:');
+    console.log('- Contains %: ', process.env.KMA_API_KEY.includes('%'));
+    console.log('- Contains +: ', process.env.KMA_API_KEY.includes('+'));
+    console.log('- Contains /: ', process.env.KMA_API_KEY.includes('/'));
+    console.log('- Contains =: ', process.env.KMA_API_KEY.includes('='));
+    console.log('- Starts with: ', process.env.KMA_API_KEY.substring(0, 10));
 
     // 서울 좌표 (경복궁)
     const nx = 60;  // 경복궁 격자 X 좌표
@@ -91,8 +97,9 @@ export async function GET() {
     console.log('Current time:', now.toISOString());
     console.log('Using base_date:', base_date, 'base_time:', base_time);
 
+    // API 키를 직접 사용 (디코딩하지 않음)
     const apiUrl = `http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?` +
-      `serviceKey=${decodedApiKey}&` +
+      `serviceKey=${process.env.KMA_API_KEY}&` +
       `pageNo=1&` +
       `numOfRows=1000&` +
       `dataType=JSON&` +
@@ -101,8 +108,8 @@ export async function GET() {
       `nx=${nx}&` +
       `ny=${ny}`;
 
-    console.log('API URL:', apiUrl);
-    console.log('Decoded API Key (first 20 chars):', decodedApiKey.substring(0, 20) + '...');
+    console.log('API URL (first 100 chars):', apiUrl.substring(0, 100) + '...');
+    console.log('Raw API Key (first 20 chars):', process.env.KMA_API_KEY.substring(0, 20) + '...');
 
     const response = await fetch(apiUrl, {
       method: 'GET',
