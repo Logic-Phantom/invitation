@@ -39,7 +39,7 @@ const Calendar: React.FC = () => {
               <div key={idx} className="flex items-center justify-center">
                 {date ? (
                   <div className={`w-8 h-8 flex items-center justify-center text-sm font-medium transition-all duration-300
-                    ${date === 27 ? 'bg-gradient-to-br from-pink-400 to-rose-400 text-white shadow-lg' : 'bg-white text-gray-700 border border-gray-100'}`}>{date}</div>
+                    ${date === 27 ? 'bg-gradient-to-br from-pink-400 to-rose-400 text-white shadow-lg rounded-[0.75rem]' : 'bg-white text-gray-700 border border-gray-100'}`}>{date}</div>
                 ) : (
                   <div className="w-8 h-8" />
                 )}
