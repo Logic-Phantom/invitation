@@ -2,15 +2,18 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    // 환경변수 디버깅
-    console.log('Environment variables check:');
+    // 환경변수 디버깅 (Vercel 환경 확인용)
+    console.log('=== Vercel Environment Check ===');
     console.log('KMA_API_KEY exists:', !!process.env.KMA_API_KEY);
     console.log('KMA_API_KEY length:', process.env.KMA_API_KEY?.length || 0);
     console.log('NODE_ENV:', process.env.NODE_ENV);
+    console.log('VERCEL_ENV:', process.env.VERCEL_ENV);
+    console.log('VERCEL_URL:', process.env.VERCEL_URL);
     
     // API 키 확인 및 디코딩
     if (!process.env.KMA_API_KEY) {
       console.warn('KMA_API_KEY 환경변수가 설정되지 않았습니다. 더미 데이터를 반환합니다.');
+      console.warn('Vercel에서 환경변수를 설정해주세요: Settings > Environment Variables');
       
       // 더미 날씨 데이터 반환 (로컬 개발용)
       const dummyData = {
@@ -63,7 +66,7 @@ export async function GET() {
     const nx = 60;  // 경복궁 격자 X 좌표
     const ny = 127; // 경복궁 격자 Y 좌표
     
-    // 현재 날짜와 시간
+    // 현재 날짜와  시간
     const now = new Date();
     let base_date = now.toISOString().slice(0, 10).replace(/-/g, '');
     
