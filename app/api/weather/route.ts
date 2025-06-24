@@ -14,13 +14,14 @@ export async function GET() {
     if (!process.env.KMA_API_KEY) {
       console.warn('KMA_API_KEY 환경변수가 설정되지 않았습니다. 더미 데이터를 반환합니다.');
       console.warn('Vercel에서 환경변수를 설정해주세요: Settings > Environment Variables');
+      console.warn('또는 /api/debug 엔드포인트로 환경변수 상태를 확인하세요.');
       
       // 더미 날씨 데이터 반환 (로컬 개발용)
       const dummyData = {
         response: {
           header: {
             resultCode: "00",
-            resultMsg: "NORMAL_SERVICE"
+            resultMsg: "NORMAL_SERVICE (DUMMY DATA - API KEY NOT SET)"
           },
           body: {
             items: {
