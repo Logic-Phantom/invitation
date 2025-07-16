@@ -149,7 +149,7 @@ const Share = () => {
         objectType: 'feed',
         content: {
           title: '임채명 ♥ 김서현 결혼합니다',
-          description: '2026년 06월 27일\n오후 1시 30분\n더케이호텔 3층 그랜드볼룸',
+          description: '2026년 06월 27일 (토)\n오후 2시 40분\n더 베뉴지',
           imageUrl: imageUrl,
           link: {
             mobileWebUrl: currentUrl,

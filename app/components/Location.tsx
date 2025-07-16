@@ -61,14 +61,14 @@ const Location = () => {
 
         try {
           const options = {
-            center: new window.kakao.maps.LatLng(37.579617, 126.977041),
+            center: new window.kakao.maps.LatLng(37.5601257, 126.8393084),
             level: 3
           };
 
           const newMap = new window.kakao.maps.Map(container, options);
           setMap(newMap);
           
-          const markerPosition = new window.kakao.maps.LatLng(37.579617, 126.977041);
+          const markerPosition = new window.kakao.maps.LatLng(37.5601257, 126.8393084);
           const newMarker = new window.kakao.maps.Marker({
             position: markerPosition
           });
@@ -76,9 +76,9 @@ const Location = () => {
           setMarker(newMarker);
 
           const iwContent = `
-            <div style="padding:10px;width:200px;text-align:center;">
-              <strong>웨딩홀</strong><br>
-              경복궁 (서울특별시 종로구 사직로 161)
+            <div style="padding:10px;width:220px;text-align:center;">
+              <strong>더 베뉴지</strong><br>
+              서울특별시 강서구 등촌제3동 강서로 388 2층 베뉴지홀
             </div>
           `;
           const newInfowindow = new window.kakao.maps.InfoWindow({
@@ -133,8 +133,8 @@ const Location = () => {
 
     const showRouteWithPosition = (startLat: number, startLng: number, isDefaultLocation: boolean = false) => {
       try {
-        const endLat = 37.579617;
-        const endLng = 126.977041;
+        const endLat = 37.5601257;
+        const endLng = 126.8393084;
 
         const startPos = new window.kakao.maps.LatLng(startLat, startLng);
         const endPos = new window.kakao.maps.LatLng(endLat, endLng);
@@ -274,8 +274,8 @@ const Location = () => {
 
     const showRouteWithPosition = (startLat: number, startLng: number, isDefaultLocation: boolean = false) => {
       try {
-        const endLat = 37.579617;
-        const endLng = 126.977041;
+        const endLat = 37.5601257;
+        const endLng = 126.8393084;
 
         const startPos = new window.kakao.maps.LatLng(startLat, startLng);
         const endPos = new window.kakao.maps.LatLng(endLat, endLng);
@@ -287,9 +287,9 @@ const Location = () => {
         let url = '';
 
         if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-          url = `tmap://route?startname=현재위치&startx=${startLng}&starty=${startLat}&goalname=경복궁&goalx=${endLng}&goaly=${endLat}&pathType=${selectedRouteType === 'bus' ? '1' : '0'}`;
+          url = `tmap://route?startname=현재위치&startx=${startLng}&starty=${startLat}&goalname=더 베뉴지&goalx=${endLng}&goaly=${endLat}&pathType=${selectedRouteType === 'bus' ? '1' : '0'}`;
         } else if (/Android/i.test(navigator.userAgent)) {
-          url = `intent://route?startname=현재위치&startx=${startLng}&starty=${startLat}&goalname=경복궁&goalx=${endLng}&goaly=${endLat}&pathType=${selectedRouteType === 'bus' ? '1' : '0'}#Intent;scheme=tmap;package=com.skt.tmap.ku;end`;
+          url = `intent://route?startname=현재위치&startx=${startLng}&starty=${startLat}&goalname=더 베뉴지&goalx=${endLng}&goaly=${endLat}&pathType=${selectedRouteType === 'bus' ? '1' : '0'}#Intent;scheme=tmap;package=com.skt.tmap.ku;end`;
         } else {
           alert('모바일 기기에서만 길찾기 기능을 지원합니다.');
           return;
@@ -402,13 +402,16 @@ const Location = () => {
       <div className="space-y-4">
         <div className="flex items-center space-x-2">
           <FaMapMarkerAlt className="text-gray-600" />
-          <span className="text-gray-600">서울특별시 종로구 사직로 161</span>
+          <div className="flex flex-col">
+            <span className="text-base font-bold text-gray-900">더베뉴지서울</span>
+            <span className="text-gray-600 text-sm">서울특별시 강서구 등촌제3동 강서로 388 2층 베뉴지홀</span>
+          </div>
         </div>
 
         <div className="bg-gray-50 p-4 rounded-lg">
           <h4 className="font-medium text-gray-900 mb-2">주차 안내</h4>
           <p className="text-gray-600 text-sm">
-            • 웨딩홀 지하 주차장 이용 가능 (3시간 무료)<br />
+            • 더 베뉴지(2층) 지하 주차장 이용 가능 (3시간 무료)<br />
             • 주차 공간이 제한적이오니 가급적 대중교통 이용을 부탁드립니다.<br />
             • 주차장 입구는 건물 정면에서 우측으로 50m 지점에 있습니다.
           </p>
