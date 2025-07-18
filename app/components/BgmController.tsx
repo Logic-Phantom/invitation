@@ -8,6 +8,7 @@ export default function BgmController() {
   const [isPlaying, setIsPlaying] = useState(true); // 초기값을 true로 설정
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [playError, setPlayError] = useState(false);
+  const [userManuallyStopped, setUserManuallyStopped] = useState(false); // 사용자가 수동으로 정지했는지 추적
 
   // 실제 오디오 재생 상태 추적
   useEffect(() => {
@@ -54,6 +55,9 @@ export default function BgmController() {
   // 첫 사용자 상호작용 시 자동 재생 시도 (모바일용)
   useEffect(() => {
     const handleFirstInteraction = async () => {
+      // 사용자가 수동으로 정지한 경우에는 재생하지 않음
+      if (userManuallyStopped) return;
+      
       if (!hasUserInteracted && audioRef.current && !isPlaying) {
         setHasUserInteracted(true);
         try {
@@ -77,7 +81,7 @@ export default function BgmController() {
         document.removeEventListener(event, handleFirstInteraction);
       });
     };
-  }, [hasUserInteracted, isPlaying]);
+  }, [hasUserInteracted, isPlaying, userManuallyStopped]);
 
   // 버튼 클릭 시 오디오 직접 제어
   const handlePlayPause = async () => {
@@ -86,8 +90,10 @@ export default function BgmController() {
     try {
       if (isPlaying) {
         audioRef.current.pause();
+        setUserManuallyStopped(true); // 사용자가 수동으로 정지함을 표시
       } else {
         await audioRef.current.play();
+        setUserManuallyStopped(false); // 재생 시 수동 정지 상태 해제
       }
     } catch (error) {
       console.error('오디오 제어 오류:', error);
