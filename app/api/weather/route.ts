@@ -114,7 +114,27 @@ export async function GET() {
     const koreaTime = new Date(utc + (koreaTimeOffset * 60000));
     base_date = koreaTime.toISOString().slice(0, 10).replace(/-/g, '');
     ({ data, response } = await fetchWeather(base_date, base_time, nx, ny, apiKey));
-    return NextResponse.json(data);
+    const resultCode2 = data?.response?.header?.resultCode;
+    const items2 = data?.response?.body?.items?.item;
+    if (resultCode2 === '00' && items2 && items2.length > 0) {
+      return NextResponse.json(data);
+    }
+
+    // 둘 다 없거나 resultCode가 00이 아니면 더미 데이터 반환
+    return NextResponse.json({
+      response: {
+        header: { resultCode: "00", resultMsg: "NO_DATA_RETURNED" },
+        body: {
+          items: {
+            item: [
+              { fcstDate: base_date, fcstTime: base_time, category: "TMP", fcstValue: "정보 없음" },
+              { fcstDate: base_date, fcstTime: base_time, category: "SKY", fcstValue: "0" },
+              { fcstDate: base_date, fcstTime: base_time, category: "PTY", fcstValue: "0" }
+            ]
+          }
+        }
+      }
+    });
   } catch (error) {
     console.error('Weather API Error:', error);
     return NextResponse.json(
