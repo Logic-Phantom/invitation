@@ -128,13 +128,13 @@ const Gallery = () => {
             {images.map((image, idx) => (
               <SwiperSlide key={idx} className="!w-24 !h-24">
                 <div className="w-24 h-24 overflow-hidden rounded-lg shadow transition-all duration-200">
-                  <Image
+                  {/* <Image
                     src={image.src}
                     alt={image.alt}
                     width={96}
                     height={96}
                     className={
-                      "object-cover rounded-lg transition-all duration-200 " +
+                      "object-contain rounded-lg transition-all duration-200 " +
                       (thumbsSwiper && thumbsSwiper.activeIndex === idx
                         ? "opacity-100 contrast-125"
                         : "opacity-50")
@@ -143,7 +143,27 @@ const Gallery = () => {
                       opacity: thumbsSwiper && thumbsSwiper.activeIndex === idx ? 1 : 0.5,
                       filter: thumbsSwiper && thumbsSwiper.activeIndex === idx ? 'contrast(1.25)' : 'none'
                     }}
-                  />
+                  /> */}
+                  {/* 원본 비율 무시 */}
+                  <Image
+                      src={image.src}
+                      alt={image.alt}
+                      width={96}
+                      height={96}
+                      className={
+                        "rounded-lg transition-all duration-200 " +
+                        (thumbsSwiper && thumbsSwiper.activeIndex === idx
+                          ? "opacity-100 contrast-125"
+                          : "opacity-50")
+                      }
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "fill",   // ✅ 비율 무시하고 강제 맞춤
+                        opacity: thumbsSwiper && thumbsSwiper.activeIndex === idx ? 1 : 0.5,
+                        filter: thumbsSwiper && thumbsSwiper.activeIndex === idx ? 'contrast(1.25)' : 'none'
+                      }}
+                    />
                 </div>
               </SwiperSlide>
             ))}
