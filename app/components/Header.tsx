@@ -148,6 +148,10 @@ const Header = () => {
           isVideoLoaded && !videoError && !isLoading ? 'opacity-100' : 'opacity-0'
         }`}
         style={{ objectFit: 'cover' }}
+        // style={{ 
+        //   objectFit: window.innerHeight > window.innerWidth ? 'contain' : 'cover',
+        //   backgroundColor: 'black'
+        // }}
       />
 
       {/* 오버레이 */}
