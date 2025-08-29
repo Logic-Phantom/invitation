@@ -81,11 +81,11 @@ const Header = () => {
       
       // 비디오 소스 설정 - WebM 포맷 추가
       const videoSource = document.createElement('source');
-      videoSource.src = '/videos/wedding-bg.mp4';
+      videoSource.src = '/videos/wedding.mp4';
       videoSource.type = 'video/mp4';
       
       const videoSourceWebM = document.createElement('source');
-      videoSourceWebM.src = '/videos/wedding-bg.webm';
+      videoSourceWebM.src = '/videos/wedding.webm';
       videoSourceWebM.type = 'video/webm';
       
       videoElement.appendChild(videoSource);
