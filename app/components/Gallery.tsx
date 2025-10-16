@@ -54,6 +54,7 @@ const Gallery = () => {
           spaceBetween={0}
           slidesPerView={1}
           loop={true}
+          watchSlidesProgress={true}
           navigation={{
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
@@ -107,20 +108,26 @@ const Gallery = () => {
             slidesPerView="auto"
             spaceBetween={12}
             loop={true}
+            watchSlidesProgress={true}
             centeredSlides={true}
+            slidesPerGroup={1}
             slideToClickedSlide={true}
             breakpoints={{
               0: {
                 slidesPerView: "auto",
                 spaceBetween: 12,
                 loop: true,
-                centeredSlides: true
+                watchSlidesProgress: true,
+                centeredSlides: true,
+                slidesPerGroup: 1
               },
               768: {
                 slidesPerView: 3,
                 spaceBetween: 8,
                 loop: true,
-                centeredSlides: true
+                watchSlidesProgress: true,
+                centeredSlides: true,
+                slidesPerGroup: 1
               }
             }}
             className="!h-24"
