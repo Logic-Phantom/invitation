@@ -11,14 +11,37 @@ async function fetchWeather(base_date: string, base_time: string, nx: number, ny
     `nx=${nx}&` +
     `ny=${ny}`;
 
-  const response = await fetch(apiUrl, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-    },
-  });
-  const data = await response.json();
-  return { data, response };
+  console.log('Fetching weather from:', apiUrl.replace(apiKey, 'API_KEY_HIDDEN'));
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10초 타임아웃
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (compatible; WeatherApp/1.0)',
+      },
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response status:', response.status);
+    console.log('API response resultCode:', data?.response?.header?.resultCode);
+    
+    return { data, response };
+  } catch (error) {
+    clearTimeout(timeoutId);
+    console.error('fetchWeather error:', error);
+    throw error;
+  }
 }
 
 export async function GET() {
@@ -31,9 +54,9 @@ export async function GET() {
     console.log('VERCEL_ENV:', process.env.VERCEL_ENV);
     console.log('VERCEL_URL:', process.env.VERCEL_URL);
     
-    // API 키 확인 및 디코딩
+    // API 키 확인 - 없으면 더미 데이터 반환
     if (!process.env.KMA_API_KEY) {
-      // 더미 날씨 데이터 반환 (로컬 개발용)
+      console.log('KMA_API_KEY not found, returning dummy data');
       const dummyData = {
         response: {
           header: {
@@ -98,38 +121,58 @@ export async function GET() {
       base_time = '2300';
     }
 
-    // 1. 20260627로 먼저 시도
-    let base_date = "20260627";
-    let { data, response } = await fetchWeather(base_date, base_time, nx, ny, apiKey);
-    const resultCode = data?.response?.header?.resultCode;
-    const items = data?.response?.body?.items?.item;
-    if (resultCode === '00' && items && items.length > 0) {
-      // 2026-06-27 데이터가 있으면 반환
-      return NextResponse.json(data);
-    }
-
-    // 2. 없으면 오늘 날짜로 재시도
+    // 오늘 날짜로 시도 (실제 날씨 데이터)
     const koreaTimeOffset = 9 * 60; // 9시간을 분으로
     const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
     const koreaTime = new Date(utc + (koreaTimeOffset * 60000));
-    base_date = koreaTime.toISOString().slice(0, 10).replace(/-/g, '');
-    ({ data, response } = await fetchWeather(base_date, base_time, nx, ny, apiKey));
-    const resultCode2 = data?.response?.header?.resultCode;
-    const items2 = data?.response?.body?.items?.item;
-    if (resultCode2 === '00' && items2 && items2.length > 0) {
-      return NextResponse.json(data);
+    let base_date = koreaTime.toISOString().slice(0, 10).replace(/-/g, '');
+    
+    try {
+      console.log(`Trying to fetch weather for ${base_date} at ${base_time}`);
+      const { data, response } = await fetchWeather(base_date, base_time, nx, ny, apiKey);
+      const resultCode = data?.response?.header?.resultCode;
+      const items = data?.response?.body?.items?.item;
+      
+      console.log('API resultCode:', resultCode);
+      console.log('Items count:', items?.length || 0);
+      
+      if (resultCode === '00' && items && items.length > 0) {
+        console.log('Successfully fetched weather data for today');
+        return NextResponse.json(data);
+      } else if (resultCode !== '00') {
+        console.log('API returned error:', data?.response?.header?.resultMsg);
+      }
+    } catch (error) {
+      console.error('Error fetching weather for today:', error);
     }
 
-    // 둘 다 없거나 resultCode가 00이 아니면 더미 데이터 반환
+    // 2026-06-27로 폴백 시도 (결혼식 날짜)
+    try {
+      base_date = "20260627";
+      console.log(`Fallback: trying to fetch weather for ${base_date} at ${base_time}`);
+      const { data, response } = await fetchWeather(base_date, base_time, nx, ny, apiKey);
+      const resultCode2 = data?.response?.header?.resultCode;
+      const items2 = data?.response?.body?.items?.item;
+      
+      if (resultCode2 === '00' && items2 && items2.length > 0) {
+        console.log('Successfully fetched weather data for 2026-06-27');
+        return NextResponse.json(data);
+      }
+    } catch (error) {
+      console.error('Error fetching weather for 2026-06-27:', error);
+    }
+
+    // 둘 다 실패하면 더미 데이터 반환
+    console.log('Both API calls failed, returning dummy data');
     return NextResponse.json({
       response: {
-        header: { resultCode: "00", resultMsg: "NO_DATA_RETURNED" },
+        header: { resultCode: "00", resultMsg: "DUMMY_DATA_FALLBACK" },
         body: {
           items: {
             item: [
-              { fcstDate: base_date, fcstTime: base_time, category: "TMP", fcstValue: "정보 없음" },
-              { fcstDate: base_date, fcstTime: base_time, category: "SKY", fcstValue: "0" },
-              { fcstDate: base_date, fcstTime: base_time, category: "PTY", fcstValue: "0" }
+              { fcstDate: "20260627", fcstTime: "1400", category: "TMP", fcstValue: "22" },
+              { fcstDate: "20260627", fcstTime: "1400", category: "SKY", fcstValue: "1" },
+              { fcstDate: "20260627", fcstTime: "1400", category: "PTY", fcstValue: "0" }
             ]
           }
         }

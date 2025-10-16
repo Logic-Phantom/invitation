@@ -28,10 +28,12 @@ const Weather = () => {
 
         const data = await response.json();
 
+        console.log('Weather API response:', data);
+        
         if (data.response?.body?.items?.item) {
           const items = data.response.body.items.item;
           
-          const currentTemp = items.find((item: any) => item.category === 'TMP')?.fcstValue || '정보 없음';
+          const currentTemp = items.find((item: any) => item.category === 'TMP')?.fcstValue || 'N/A';
           const currentWeather = items.find((item: any) => item.category === 'PTY')?.fcstValue || '0';
           
           const weatherText = {
@@ -46,8 +48,24 @@ const Weather = () => {
             temperature: `${currentTemp}°C`,
             weather: weatherText
           });
+        } else if (data.response?.header?.resultMsg?.includes('DUMMY')) {
+          // 더미 데이터인 경우
+          setWeather({
+            temperature: '22°C',
+            weather: '맑음'
+          });
+        } else if (data.response?.header?.resultMsg?.includes('FALLBACK')) {
+          // 폴백 더미 데이터인 경우
+          setWeather({
+            temperature: '22°C',
+            weather: '맑음'
+          });
         } else {
-          throw new Error('날씨 정보를 찾을 수 없습니다.');
+          console.warn('Unexpected API response structure:', data);
+          setWeather({
+            temperature: 'N/A',
+            weather: 'No Data'
+          });
         }
       } catch (err) {
         console.error('날씨 정보 가져오기 실패:', err);
